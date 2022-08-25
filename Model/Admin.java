@@ -1,4 +1,6 @@
 package Model;
+import View.AdminAccessView;
+import View.AdminView;
 
 public class Admin {
     private static final String name = "admin";
@@ -6,7 +8,7 @@ public class Admin {
     public User user;
     public Booking booking;
 
-    public String id;
+
     
 
   
@@ -16,6 +18,7 @@ public class Admin {
         
     }
 
+    // kiem tra tk admin
     public static boolean checkAdminAccount(String id, String password) {
         boolean canAdminAccess = false;
 
@@ -43,5 +46,13 @@ public class Admin {
         return canAdminAccess;
     }
 
+    public void AdminAccessView (String id, String password) {
+        boolean canAdminAccess = Admin.checkAdminAccount(id, password);
+        if (canAdminAccess){
+            AdminAccessView.display();
+        }else{
+            AdminView.display();
+        }
+    }
 
 }

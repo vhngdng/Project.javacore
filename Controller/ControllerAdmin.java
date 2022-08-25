@@ -11,12 +11,9 @@ public class ControllerAdmin {
 
     }
 
+    // check admin Access và chuyển hướng view
     public static void AdminAccess(String id, String password) {
-        boolean canAdminAccess = Admin.checkAdminAccount(id, password);
-        if (canAdminAccess){
-        AdminAccessView.display();
-        }else{
-        AdminView.display();
-        }
+        Admin admin = new Admin(id, password);
+        admin.AdminAccessView(id, password);
     }
 }
