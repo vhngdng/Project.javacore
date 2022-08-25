@@ -18,6 +18,7 @@ public class MenuView {
         System.out.println("[1] Registration");
         System.out.println("[2] Sign-in");
         System.out.println("[3] VCB Booking");
+        System.out.println("[4] Admin access");
         System.out.println("");
 
     }
@@ -39,6 +40,9 @@ public class MenuView {
                 }
                 case 3: {
                     BookingView.display();
+                }
+                case 4: {
+                    AdminView.display();
                 }
                 default:
                 break;
