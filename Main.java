@@ -3,9 +3,8 @@ import View.MenuView;
 
 public class Main {
     public static void main(String[] args) {
-        MenuView menuView = new MenuView();
-        LoginView menuLogin = new LoginView();
+     
+       LoginView.display();
 
-        menuView.display();
     }
 }

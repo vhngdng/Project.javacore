@@ -1,6 +1,7 @@
 package Model;
 import View.AdminAccessView;
 import View.AdminView;
+import View.LoginView;
 
 public class Admin {
     private static final String name = "admin";
@@ -8,6 +9,7 @@ public class Admin {
     public User user;
     public Booking booking;
 
+    public int role;
 
     
 
@@ -51,8 +53,8 @@ public class Admin {
         if (canAdminAccess){
             AdminAccessView.display();
         }else{
-            AdminView.display();
+            LoginView.display();
         }
     }
 
-}
+} 
