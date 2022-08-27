@@ -20,5 +20,6 @@ public class RegistrationView {
         System.out.println("Hay nhap Current Account: ");
         int currentAccount = scanner.nextInt();
         System.out.println("");
+        // Viet not code
     }
 }

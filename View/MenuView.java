@@ -5,10 +5,13 @@ import java.util.Scanner;
 import Controller.ControllerUser;
 
 public class MenuView {
-    public ControllerUser controllerUser;
-    public Scanner scanner;
-
-    public MenuView () {
+    private ControllerUser controllerUser;
+    private Scanner scanner;
+    private RegistrationView registrationView;
+    private LoginView loginView;
+    private BookingView bookingView;
+    
+    public MenuView() {
 
     }
 
@@ -18,13 +21,12 @@ public class MenuView {
         System.out.println("[1] Registration");
         System.out.println("[2] Sign-in");
         System.out.println("[3] VCB Booking");
-        System.out.println("[4] Admin access");
         System.out.println("");
 
     }
 
-    public void display() {
-        boolean isBoolean = false;
+    public boolean display() {
+        boolean isQuit = false;
         while (true) {
             scanner = new Scanner(System.in);
             displaySelection();
@@ -41,13 +43,34 @@ public class MenuView {
                 case 3: {
                     BookingView.display();
                 }
-                case 4: {
-                    AdminView.display();
-                }
                 default:
-                break;
-            }   
+                    break;
+            }
 
+            if (isQuit == true) {
+                break;
+            }
+        }
+        if (isQuit == true) {
+            this.quit();
+        }
+        return true;
+    }
+
+    
+
+    /**
+     * system quit
+     */
+    private void quit() {
+        System.out.println("Hen gap lai !!!");
+        this.close();
+    }
+
+    // close view
+    public void close() {
+        if (this.scanner != null) {
+            this.scanner.close();
         }
     }
 }
