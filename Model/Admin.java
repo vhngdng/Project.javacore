@@ -6,7 +6,7 @@ import View.LoginView;
 public class Admin extends Person{
     private final String name = "admin";
     private final String password = "admin";
-    private final int id = -1;
+    private final int role = -1;
     public User user;
     public Booking booking;  
 

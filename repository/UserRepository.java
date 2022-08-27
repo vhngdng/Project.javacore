@@ -26,9 +26,9 @@ public class UserRepository {
      * add new user
      * @param person
      */
-    public User addNewUser(User person) {
+    public static User addNewUser(User person) {
         int num = USER_COUNT + 1;
-        this.personList.add(person);
+        personList.add(person);
         USER_COUNT++;
         return person;
     }
@@ -63,17 +63,31 @@ public class UserRepository {
 
     public static Person checkLoginUser(Person person) {
         for (Person listPerson: personList) {
-            if (listPerson != null) {
-                listPerson.getName().equals(person.getName());
+            if (listPerson != null && listPerson.getName().equals(person.getName())) {
                 person = listPerson;
                 break;
             }
         }
 
-        if (person == null) {
+        if (person.getId() == 0) {
+            person = null;
             System.out.println("sai thông tin đăng nhập, vui lòng nhập lại");
         }
         return person;
+    }
+
+    public static User checkCurrentAccount(User user) {
+        for (Person listPerson: personList) {
+            if (listPerson != null && ((User)listPerson).getCurrentAccount() == (user.getCurrentAccount())) {
+                user = (User)listPerson;
+                break;
+            }
+        }
+
+        if (user == null) {
+            System.out.println("sai thông tin người nhận");
+        }
+        return user;
     }
 
 

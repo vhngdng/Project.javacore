@@ -58,8 +58,12 @@ public class LoginService {
 
 
     public static Person checkLoginUser(Person person) {
-        UserRepository.checkLoginUser(person);
+        person = UserRepository.checkLoginUser(person);
         return person;
     }
 
+    public static User checkCurrentAccount(User user) {
+        UserRepository.checkCurrentAccount(user);
+        return user;
+    }
 }

@@ -10,7 +10,7 @@ public class GuestAccessView {
     public ControllerAdmin controllerAdmin;
     
     public GuestAccessView() {
-
+        
     }
 
     
