@@ -84,7 +84,7 @@ public class UserRepository {
             }
         }
 
-        if (user == null) {
+        if (user.getId() == 0) {
             System.out.println("sai thông tin người nhận");
         }
         return user;

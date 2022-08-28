@@ -96,6 +96,8 @@ public class UserView {
 
     // chuyen tien
     public int transferMoney() {
+        User userBeneficiary = new User();
+        controllerUser = new ControllerUser();
         System.out.println("test");
         System.out.println("User balance: " + user.balance);
         System.out.println("Sender information: " + user.getCardType());
@@ -109,11 +111,13 @@ public class UserView {
             case 1: {
                 System.out.println("Beneficiary account: ");
                 int currentAccount = scanner.nextInt();
-                User userBeneficiary = controllerUser.enterBeneficiary(currentAccount);
+                userBeneficiary = controllerUser.enterBeneficiary(currentAccount);
                 if (userBeneficiary != null) {
+                    System.out.println("Amount: ");
                     int money = scanner.nextInt();
                     scanner.nextLine();
                     controllerUser.transferMoney(money);
+                    
                 }
             }
             case 2: {

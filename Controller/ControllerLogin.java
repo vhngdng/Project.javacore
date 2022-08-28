@@ -15,16 +15,15 @@ import View.LoginView;
 import View.UserView;
 import repository.UserRepository;
 import service.LoginService;
+import util.DateTimeUtil;
 
 public class ControllerLogin {
-    private Person person;
-    private LoginView loginView;
-    private static UserView userView;
+    
     private static ControllerUser controllerUser;
     private static JSONObject userJson;
     //nhận dữ liệu từ view và tạo object
     public static void loginUser(JSONObject userInfo) {
-        userView = new UserView();
+        UserView userView = new UserView();
         Person person = new User();
         String name = userInfo.get("name").toString();
         String password = userInfo.get("password").toString();
@@ -49,9 +48,7 @@ public class ControllerLogin {
                 String cardType = user.getCardType() == CARDTYPE.DEBIT? "DEBIT" : "VISA";
                 String currentAccount = String.valueOf(user.getCurrentAccount());
                 String email = user.getEmail();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                
-                String expiredDate = user.getExpiredDate().format(formatter);
+                String expiredDate = DateTimeUtil.convertLocalDateToString(user.getExpiredDate());               
                 String id = String.valueOf(user.getId());
                 String nameJson = user.getName();
                 String passwordJson = user.getPassword();

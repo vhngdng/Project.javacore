@@ -31,6 +31,8 @@ public class ControllerUser {
         adminService = new AdminService();
         if(money >= 5000000) {
             adminService.sendNotification();
+        }else{
+            
         }
     }
 
