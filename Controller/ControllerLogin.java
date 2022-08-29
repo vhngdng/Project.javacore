@@ -15,10 +15,15 @@ import View.UserView;
 import util.DateTimeUtil;
 
 public class ControllerLogin {
-    
-    private ControllerUser controllerUser;
-    private JSONObject userJson;
+    // LoginView loginView = new LoginView();
+    // private JSONObject userJson;
     //nhận dữ liệu từ view và tạo object
+
+    public static void loginViewDisplay() {
+        
+        LoginView.display();
+    }
+
     public static void loginUser(JSONObject userInfo) {
        
         UserView userView = new UserView();
@@ -39,42 +44,18 @@ public class ControllerLogin {
                 AdminAccessView adminAccessView = new AdminAccessView();
                 adminAccessView.display();
             }else{
-
-                ControllerUser controllerUser = new ControllerUser();
                 User user = (User) checkedPerson;
-                controllerUser.setUser(user);
-
-                String address = user.getAddress();
-                String balance = String.valueOf(user.getBalance());
-                String cardNumber = String.valueOf(user.getCardNumber());
-                String cardType = user.getCardType() == CARDTYPE.DEBIT? "DEBIT" : "VISA";
-                String currentAccountJson = String.valueOf(user.getCurrentAccount());
-                String email = user.getEmail();
-                String expiredDate = DateTimeUtil.convertLocalDateToString(user.getExpiredDate());               
-                String id = String.valueOf(user.getId());
-                String nameJson = user.getName();
-                String passwordJson = user.getPassword();
-
+                User.setUser(user);
                 JSONObject userJson = new JSONObject();
-                userJson.put("address", address);
-                userJson.put("balance", balance);
-                userJson.put("cardNumber", cardNumber);
-                userJson.put("cardType", cardType);
-                userJson.put("currentAccount", currentAccountJson);
-                userJson.put("email", email);
-                userJson.put("expiredDate", expiredDate);
-                userJson.put("id", id);
-                userJson.put("name", nameJson);
-                userJson.put("password", passwordJson);
-
-                
+                ControllerUser controllerUser = new ControllerUser();
+                userJson = controllerUser.convertObjectToJson(user);
                 userView.display(userJson);
             }
         }
     }
     
     public JSONObject getUserJson() {
-        return this.userJson;
+        return this.getUserJson();
     }
     
 }

@@ -4,14 +4,22 @@ import java.time.LocalDate;
 
 
 public class Transaction {
-    // private User userSender;
-    // private int idOfUserSender;
-    protected User user;
-    protected int id;
+    protected int senderCurrentAccount;
+    protected User userSender;
+    protected int beneficiaryCurrentAccount;
+    protected User userBeneficiary;
     protected int money;
     protected LocalDate dateTimeTransaction;
     protected boolean result;
     protected TRANSACTIONTYPE transactionType;
+
+    public Transaction(int senderCurrentAccount, int beneficiaryCurrentAccount, int money,
+            LocalDate dateTimeTransaction) {
+        this.senderCurrentAccount = senderCurrentAccount;
+        this.beneficiaryCurrentAccount = beneficiaryCurrentAccount;
+        this.money = money;
+        this.dateTimeTransaction = dateTimeTransaction;
+    }
 
     // public Transaction(int idOfUserSender, int idOfBeneficiary) {
     //     this.idOfUserSender = idOfUserSender;
@@ -21,61 +29,44 @@ public class Transaction {
         
     }
 
-    public Transaction(User user, int money, LocalDate dateTimeTransaction) {
-        this.money = money;
-        this.user = user;
-        this.dateTimeTransaction = dateTimeTransaction;
+    public void setTransactionType(TRANSACTIONTYPE sender) {
     }
 
-    public User getUser() {
-        return user;
+    public void setNumberVerify(String verificationCode) {
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public int getSenderCurrentAccount() {
+        return senderCurrentAccount;
     }
 
-    public int getId() {
-        return id;
+    public User getUserSender() {
+        return userSender;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getBeneficiaryCurrentAccount() {
+        return beneficiaryCurrentAccount;
+    }
+
+    public User getUserBeneficiary() {
+        return userBeneficiary;
     }
 
     public int getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
     public LocalDate getDateTimeTransaction() {
         return dateTimeTransaction;
-    }
-
-    public void setDateTimeTransaction(LocalDate dateTimeTransaction) {
-        this.dateTimeTransaction = dateTimeTransaction;
     }
 
     public boolean isResult() {
         return result;
     }
 
-    public void setResult(boolean result) {
-        this.result = result;
-    }
-
     public TRANSACTIONTYPE getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(TRANSACTIONTYPE transactionType) {
-        this.transactionType = transactionType;
-    }
 
-
-   
     
 }

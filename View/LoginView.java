@@ -9,11 +9,8 @@ import Controller.ControllerAdmin;
 import Controller.ControllerLogin;
 
 public class LoginView {
-    public ControllerLogin controllerLogin;
     public static Scanner scanner;
-    public LoginView() {
-
-    }
+    
 
     public static void display() {
 
