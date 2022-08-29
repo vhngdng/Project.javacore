@@ -1,4 +1,4 @@
-package repository;
+package Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,11 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import Model.Admin;
-import Model.Person;
-import Model.Transaction;
-import Model.TransactionSending;
-import Model.User;
 
 public class UserRepository {
    
@@ -87,7 +82,7 @@ public class UserRepository {
             }
         }
 
-        if (person.getRole() != -1) {
+        if (person.getRole() != -1 && person.getRole() != 1) {
             person = null;
             System.out.println("sai thông tin đăng nhập, vui lòng nhập lại");
         }
@@ -109,12 +104,26 @@ public class UserRepository {
         return user;
     }
 
+    public static boolean checkMoney(User user, int currentAccount) {
+        boolean isValid = false;
+        
+        int moneyTransfer = user.getBalance();
+        user = checkCurrentAccount(user);
+        if (moneyTransfer > user.getBalance()) {
+            System.out.println("So tien khong hop le");
+            isValid = false;
+        }else{
+            isValid = true;
+        }
+        
+        return isValid;
+    }
 
 
     public static User checkMoneyOfSender(User senderUser) {
-        int moneyTransfer = senderUser.getCurrentAccount();
-        User senderuser = checkCurrentAccount(senderUser);
-        if (moneyTransfer > senderUser.getCurrentAccount()) {
+        int moneyTransfer = senderUser.getBalance();
+        senderUser = checkCurrentAccount(senderUser);
+        if (moneyTransfer > senderUser.getBalance() && senderUser !=null) {
             System.out.println("So tien khong hop le");
             senderUser = null;
         }

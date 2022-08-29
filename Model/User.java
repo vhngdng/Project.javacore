@@ -70,4 +70,8 @@ public class User extends Person {
     public void setCurrentAccount(int currentAccount){
         this.currentAccount = currentAccount;
     }
+
+    public void setBalance(int balance){
+        this.balance = balance;
+    }
 }

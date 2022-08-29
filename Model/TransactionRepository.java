@@ -1,5 +1,4 @@
-package repository;
-
+package Model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -15,10 +14,12 @@ public class TransactionRepository {
     private static String numberVerify;
     private static int transactionCount = 0;
     private static Map<Integer, Transaction> transactionList = new LinkedHashMap<>();
+    private static List<Transaction> listTransaction = new ArrayList<>();
     
     public static int addTransaction(Transaction transaction) {
         transactionCount += 1;
         transactionList.put(transactionCount, transaction);
+        listTransaction.add(transaction);
         return transactionCount;
     }
 

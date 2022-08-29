@@ -1,20 +1,17 @@
 package Controller;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import org.json.JSONObject;
 
 import Model.Admin;
 import Model.CARDTYPE;
 import Model.Person;
 import Model.User;
+import Model.UserRepository;
 import View.AdminAccessView;
 import View.LoginView;
 import View.UserView;
-import repository.UserRepository;
-import service.LoginService;
+
+
 import util.DateTimeUtil;
 
 public class ControllerLogin {
@@ -33,7 +30,8 @@ public class ControllerLogin {
         person.setPassword(password);
         person.setCurrentAccount(currentAccount);
 
-        Person checkedPerson = LoginService.checkLoginUser(person);
+        Person checkedPerson = UserRepository.checkLoginUser(person);
+        
         if (checkedPerson == null) {
             LoginView.display();
         }else{

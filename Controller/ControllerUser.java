@@ -1,6 +1,7 @@
 package Controller;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,9 +13,6 @@ import Model.TransactionReceiving;
 import Model.TransactionSending;
 import Model.User;
 import View.UserView;
-import service.AdminService;
-import service.LoginService;
-import service.TransactionService;
 import util.DateTimeUtil;
 
 public class ControllerUser {
@@ -31,7 +29,9 @@ public class ControllerUser {
         int currentAccount = Integer.valueOf(jsonObject.get("currentAccount").toString());
         userBeneficiary = new User();
         userBeneficiary.setCurrentAccount(currentAccount);
-        userBeneficiary = LoginService.checkCurrentAccount(userBeneficiary);
+        userBeneficiary = UserRepository.checkCurrentAccount(userBeneficiary);
+        UserRepository.checkCurrentAccount(userBeneficiary);
+        
         if (userBeneficiary == null) {
             userView.display(userJson);
         }
@@ -59,7 +59,7 @@ public class ControllerUser {
         User senderUser = new User();
         senderUser.setCurrentAccount(senderCurrentAccount);
         senderUser.setCurrentAccount(moneyTransfer);
-        senderUser = LoginService.checkMoneyOfSender(senderUser);
+        senderUser = UserRepository.checkMoneyOfSender(senderUser);
         if (senderUser == null) {
             returnToUserView();
         }
@@ -100,8 +100,8 @@ public class ControllerUser {
         LocalDate dateTimeSendingTransaction = DateTimeUtil
                 .convertStringToLocalDate(moneyTransactionJson.get("dateTimeSendingTransaction").toString());
         
-        User userSender = LoginService.getUserWithCurrentAccount(senderCurrentAccount);
-        User userBeneficiary = LoginService.getUserWithCurrentAccount(beneficiaryCurrentAccount);
+        User userSender = UserRepository.getUserWithCurrentAccount(senderCurrentAccount);
+        User userBeneficiary = UserRepository.getUserWithCurrentAccount(beneficiaryCurrentAccount);
 
         Transaction transactionSending = new TransactionSending(userSender, moneyTransfer, dateTimeSendingTransaction);
         
@@ -111,13 +111,13 @@ public class ControllerUser {
         Transaction transactionReceiving = new TransactionReceiving(userBeneficiary, moneyTransfer, dateTimeSendingTransaction);
 
         //luu transaction vao repository
-        TransactionService.addNewTransaction(transactionSending, transactionReceiving);
+        TransactionRepository.addNewTransaction(transactionSending, transactionReceiving);
         int idTransactionSending = transactionSending.getId();
         // Neu tien > 5.000.000 -> send request to admin
         if (moneyTransfer >= 5000000) {
-            AdminService.sendAdminRequestRepository(transactionSending);
+            Map<Integer, TransactionSending> requestList = AdminRequestRepository.addRequest(transactionSending);
         }else{
-            String verificationCode = TransactionService.requestVerificationCode(transactionSending);
+            String verificationCode = UserRepository.requestVerificationCode(transactionSending);
             JSONObject verifiJson = new JSONObject();
             verifiJson.put("verificationCode", verificationCode);
             verifiJson.put("id", idTransactionSending);
@@ -130,7 +130,17 @@ public class ControllerUser {
     public static void checkVerificationCode(JSONObject checkCodeJson) {
        String codeCheck = checkCodeJson.get("checkCode").toString();
        int idOfThisTransaction = Integer.valueOf(checkCodeJson.getString("id").toString());
-       TransactionService.checkCode(codeCheck, idOfThisTransaction);
+       boolean isValid = TransactionRepository.checkCodeVerification(codeCheck, idOfThisTransaction);
+    }
+
+    //kiem tra tien co vuot gioi han khong
+    public static void checkMoney(JSONObject money) {
+        // int moneyCheck = Integer.valueOf(money.get("money").toString());
+        // int currentAccount = Integer.valueOf(money.get("currentAccount").toString());
+        // User user2 = new User();
+        // user2.setCurrentAccount(currentAccount);
+        // user2.setBalance(moneyCheck);
+        // LoginService.checkMoney(user2, currentAccount);
     }
 
 }

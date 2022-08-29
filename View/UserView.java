@@ -160,7 +160,14 @@ public class UserView {
 
     //nap tien dien thoai
     public int phoneRecharging() {
+        scanner = new Scanner(System.in);
         System.out.println("test");
+        int num = scanner.nextInt();
+        scanner.nextLine();
+        int currentAccount = user.getCurrentAccount();
+
+        
+        ControllerUser.checkMoney(num);
         return 0;
     }
 
@@ -190,5 +197,6 @@ public class UserView {
         checkCodeJson.put("checkCode", code);
         checkCodeJson.put("id", idOfThisTransaction);
         ControllerUser.checkVerificationCode(checkCodeJson);
+        
     }
 }
