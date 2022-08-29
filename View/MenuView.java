@@ -17,10 +17,9 @@ public class MenuView {
 
     public static void displaySelection() {
         System.out.println("==========VCB Digibank==========");
-        System.out.println("============Welcome=============");
-        System.out.println("[1] Registration");
-        System.out.println("[2] Sign-in");
-        System.out.println("[3] VCB Booking");
+        System.out.println("============Welcome============="); 
+        System.out.println("[1] Sign-in");
+        System.out.println("[2] VCB Booking");
         System.out.println("");
 
     }
@@ -34,14 +33,10 @@ public class MenuView {
             int numSelect = scanner.nextInt();
             switch (numSelect) {
                 case 1: {
-                    RegistrationView.display();
-                    break;
-                }
-                case 2: {
                     LoginView.display();
                     break;
                 }
-                case 3: {
+                case 2: {
                     BookingView.display();
                 }
                 default:
