@@ -9,21 +9,21 @@ import java.util.Random;
 import java.util.Set;
 
 import Model.Transaction;
-import Model.TransactionSending;
+
 
 public class AdminRequestRepository {
     private static int requestCount = 0;
-    private static Map<Integer, TransactionSending>requestList = new LinkedHashMap<>();
+    private static Map<Integer, Transaction>requestList = new LinkedHashMap<>();
 
-    public static Map<Integer, TransactionSending> addRequest(Transaction transactionSending) {
-        String numberVerify = UserRepository.getNumberVerify();
-        TransactionSending transactionRequest = (TransactionSending) transactionSending;
+    // public static Map<Integer, Transaction> addRequest(Transaction transactionSending) {
+    //     String numberVerify = UserRepository.getNumberVerify();
+    //     TransactionSending transactionRequest = (TransactionSending) transactionSending;
 
-        transactionRequest.setNumberVerify(numberVerify);
-        requestList.put(++requestCount, transactionRequest);
+    //     transactionRequest.setNumberVerify(numberVerify);
+    //     requestList.put(++requestCount, transactionRequest);
         
-        return requestList;
+    //     return requestList;
 
     }
     
-}
+

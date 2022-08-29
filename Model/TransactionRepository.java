@@ -18,19 +18,18 @@ public class TransactionRepository {
     
     public static int addTransaction(Transaction transaction) {
         transactionCount += 1;
-        transactionList.put(transactionCount, transaction);
         listTransaction.add(transaction);
         return transactionCount;
     }
 
-    public static void addNewTransaction(Transaction transactionSending, Transaction transactionReceiving) {
-        transactionSending.setTransactionType(TRANSACTIONTYPE.SENDER);
-        transactionReceiving.setTransactionType(TRANSACTIONTYPE.RECEIVER);
+    // public static void addNewTransaction(Transaction transactionSending, Transaction transactionReceiving) {
+    //     transactionSending.setTransactionType(TRANSACTIONTYPE.SENDER);
+    //     transactionReceiving.setTransactionType(TRANSACTIONTYPE.RECEIVER);
 
-        addTransaction(transactionSending);
-        addTransaction(transactionReceiving);
+    //     addTransaction(transactionSending);
+    //     addTransaction(transactionReceiving);
 
-    }
+    // }
 
     public static int getIdOfTransaction (Transaction transaction) {
         Set<Integer>keySet = transactionList.keySet();

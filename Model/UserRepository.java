@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import Controller.ControllerUser;
 
 public class UserRepository {
-   
+
     private static int USER_COUNT = 1;
     User user;
     Person person;
@@ -91,7 +92,8 @@ public class UserRepository {
 
     public static User checkCurrentAccount(User user) {
         for (Person listPerson : personList) {
-            if (listPerson != null && ((User) listPerson).getCurrentAccount() == (user.getCurrentAccount())) {
+            if (listPerson != null && listPerson.getRole() != -1 
+                    && ((User) listPerson).getCurrentAccount() == (user.getCurrentAccount())) {
                 user = (User) listPerson;
                 break;
             }
@@ -106,34 +108,35 @@ public class UserRepository {
 
     public static boolean checkMoney(User user, int currentAccount) {
         boolean isValid = false;
-        
+
         int moneyTransfer = user.getBalance();
         user = checkCurrentAccount(user);
         if (moneyTransfer > user.getBalance()) {
             System.out.println("So tien khong hop le");
             isValid = false;
-        }else{
+        } else {
             isValid = true;
         }
-        
+
         return isValid;
     }
 
-
-    public static User checkMoneyOfSender(User senderUser) {
-        int moneyTransfer = senderUser.getBalance();
-        senderUser = checkCurrentAccount(senderUser);
-        if (moneyTransfer > senderUser.getBalance() && senderUser !=null) {
+    public static boolean checkMoneyOfSender(int moneyTransfer) {
+        boolean isValid = false;
+        if (moneyTransfer > User.getUser().getBalance()) {
             System.out.println("So tien khong hop le");
-            senderUser = null;
+            isValid = false;
+        } else {
+            isValid = true;
         }
-        return senderUser;
+
+        return isValid;
     }
 
     public static User getUserWithCurrentAccount(int senderCurrentAccount) {
         User user = new User();
         for (Person listPerson : personList) {
-            if (listPerson != null && ((User) listPerson).getCurrentAccount() == senderCurrentAccount) {
+            if (listPerson != null && listPerson.getRole() != -1 && ((User) listPerson).getCurrentAccount() == senderCurrentAccount) {
                 user = (User) listPerson;
                 break;
             }
@@ -150,26 +153,41 @@ public class UserRepository {
         return false;
     }
 
-    //get 4 digit verify number
-    public static String getNumberVerify() {
-        Random random = new Random();
-        String numberVerify = String.format("%04d", random.nextInt());
-        return numberVerify;
-    }
+    // // get 4 digit verify number
+    // public static String getNumberVerify() {
+    //     Random random = new Random();
+    //     String numberVerify = String.format("%04d", random.nextInt());
+    //     return numberVerify;
+    // }
 
-    
-    public static boolean checkNumberVerify(String numberVerify) {
-        return true;
-    }
+    // public static boolean checkNumberVerify(String numberVerify) {
+    //     return true;
+    // }
 
-    public static User findUserWithId (int id) {
+    public static User findUserWithId(int id) {
         return null;
     }
 
-    public static String requestVerificationCode(Transaction transactionSending) {
-        String verificationCode = getNumberVerify();
-        ((TransactionSending)transactionSending).setNumberVerify(verificationCode);
-        
-        return verificationCode;
+    // public static String requestVerificationCode(Transaction transaction) {
+    //     String verificationCode = getNumberVerify();
+    //     transaction.setNumberVerify(verificationCode);
+
+    //     return verificationCode;
+    // }
+
+    public static int transferMoney(Transaction transaction) {
+        ControllerUser controller = new ControllerUser();
+        User benefiUser = getUserWithCurrentAccount(transaction.getBeneficiaryCurrentAccount());
+        User sendUser = getUserWithCurrentAccount(transaction.getSenderCurrentAccount());
+        if (benefiUser == sendUser) {
+            System.out.println("Người nhận không phù hợp");
+            controller.displayUserView();
+        }
+        int money = transaction.getMoney();
+        benefiUser.setBalance(benefiUser.getBalance() + money);
+        sendUser.setBalance(sendUser.getBalance() - money);
+
+        return sendUser.getBalance();
     }
+
 }

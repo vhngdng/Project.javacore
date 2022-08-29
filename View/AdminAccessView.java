@@ -10,7 +10,7 @@ import Model.Admin;
 
 public class AdminAccessView {
     private static Admin admin;
-    private Scanner scanner;
+    private static Scanner scanner;
     private MenuView menuView;
     public AdminAccessView () {
     

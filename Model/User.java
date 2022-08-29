@@ -13,7 +13,9 @@ public class User extends Person {
     private String email;
     private String address;
     private LocalDate transactionDate;
-   
+    //User login
+    private static User user;
+    private static int role = 1;
 
     public User(int currentAccount, int balance, int cardNumber, LocalDate expiredDate, String name, CARDTYPE cardType,
             String email, String address, String password) {
@@ -26,10 +28,11 @@ public class User extends Person {
         this.email = email;
         this.address = address;
         this.setPassword(password);
+        
     }
 
     public User() {
-
+        
     }
 
 
@@ -73,5 +76,41 @@ public class User extends Person {
 
     public void setBalance(int balance){
         this.balance = balance;
+    }
+
+    public LocalDate getTransactionDate() {
+        return transactionDate;
+    }
+
+    public static User getUser() {
+        return user;
+    }
+
+    public void setCardNumber(int cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setExpiredDate(LocalDate expiredDate) {
+        this.expiredDate = expiredDate;
+    }
+
+    public void setCardType(CARDTYPE cardType) {
+        CardType = cardType;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTransactionDate(LocalDate transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    public static void setUser(User user) {
+        User.user = user;
     }
 }

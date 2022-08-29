@@ -2,12 +2,12 @@ package View;
 
 import java.util.Scanner;
 
+import Controller.ControllerLogin;
 import Controller.ControllerUser;
 
 public class MenuView {
     private ControllerUser controllerUser;
     private Scanner scanner;
-    private RegistrationView registrationView;
     private LoginView loginView;
     private BookingView bookingView;
     
@@ -33,7 +33,7 @@ public class MenuView {
             int numSelect = scanner.nextInt();
             switch (numSelect) {
                 case 1: {
-                    LoginView.display();
+                    ControllerLogin.loginViewDisplay();
                     break;
                 }
                 case 2: {
