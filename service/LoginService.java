@@ -2,9 +2,6 @@ package service;
 
 
 import java.util.Set;
-
-import javax.management.ConstructorParameters;
-
 import Model.*;
 import repository.UserRepository;
 
@@ -65,5 +62,18 @@ public class LoginService {
     public static User checkCurrentAccount(User user) {
         UserRepository.checkCurrentAccount(user);
         return user;
+    }
+
+
+
+
+    public static User checkMoneyOfSender(User senderUser) {
+        senderUser = UserRepository.checkMoneyOfSender(senderUser);
+        return senderUser;
+
+    }
+
+    public static User getUserWithCurrentAccount(int senderCurrentAccount) {
+        return UserRepository.getUserWithCurrentAccount(senderCurrentAccount);
     }
 }

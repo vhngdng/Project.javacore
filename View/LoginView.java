@@ -23,11 +23,14 @@ public class LoginView {
         String name = scanner.nextLine();
         System.out.println("Your Password: ");
         String password = scanner.nextLine();
+        System.out.println("Your current account: ");
+        int currentAccount = scanner.nextInt();
+        scanner.nextLine();
         //đổi dữ liệu qua file JSON
         JSONObject UserInfo = new JSONObject();
         UserInfo.put("name", name);
         UserInfo.put("password", password);
-
+        UserInfo.put("currentAccount", currentAccount);
         //chuyển param là file JSON sang controller
         ControllerLogin.loginUser(UserInfo);
 
