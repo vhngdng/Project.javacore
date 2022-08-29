@@ -1,17 +1,20 @@
 package Model;
+import java.util.LinkedList;
+import java.util.List;
+
 import View.AdminAccessView;
 import View.GuestAccessView;
 import View.LoginView;
 
 public class Admin extends Person{
-    private final String name = "admin";
-    private final String password = "admin";
-    private final int role = -1;
-    public User user;
-    public Booking booking;  
-
-    public Admin(String name, String password) {
-        
+    
+    private static List<AdminRequest>requestList = new LinkedList<>();
+    // private static 
+    public Admin() {
+        this.name = "admin";
+        this.password ="admin";
+        this.role = -1;
+        this.currentAccount = 0;
     }
 
 }

@@ -5,6 +5,15 @@ public class Person {
     protected String password;
     protected int role;
     protected String name;
+    protected int currentAccount;
+
+    public int getCurrentAccount() {
+        return this.currentAccount;
+    }
+
+    public void setCurrentAccount(int currentAccount) {
+        this.currentAccount = currentAccount;
+    }
 
     public Person() {
     }

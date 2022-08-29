@@ -1,19 +1,19 @@
 package Model;
 
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 
 
 
 public class User extends Person {
-    public int currentAccount;
-    public int balance;
-    public int cardNumber;
-    public LocalDate expiredDate;
-    public CARDTYPE CardType;
-    public String email;
-    public String address;
-
+    private int balance;
+    private int cardNumber;
+    private LocalDate expiredDate;
+    private CARDTYPE CardType;
+    private String email;
+    private String address;
+    private LocalDate transactionDate;
+   
 
     public User(int currentAccount, int balance, int cardNumber, LocalDate expiredDate, String name, CARDTYPE cardType,
             String email, String address, String password) {
@@ -69,5 +69,9 @@ public class User extends Person {
 
     public void setCurrentAccount(int currentAccount){
         this.currentAccount = currentAccount;
+    }
+
+    public void setBalance(int balance){
+        this.balance = balance;
     }
 }

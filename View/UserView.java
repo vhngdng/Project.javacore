@@ -8,10 +8,12 @@ import java.util.Scanner;
 
 import org.json.JSONObject;
 
+import Controller.ControllerLogin;
 import Controller.ControllerUser;
 import Model.CARDTYPE;
 import Model.Person;
 import Model.User;
+import util.DateTimeUtil;
 
 public class UserView {
     private static User user;
@@ -29,6 +31,7 @@ public class UserView {
     }
 
     public void display(JSONObject userJsonObject) {
+        this.user = new User();
         this.jsonObject = userJsonObject;
         String address = userJsonObject.get("address").toString();
         int balance = Integer.valueOf(userJsonObject.get("balance").toString());
@@ -36,13 +39,13 @@ public class UserView {
         CARDTYPE cardType = (userJsonObject.get("cardType").toString().toLowerCase().equals("debit") )? CARDTYPE.DEBIT : CARDTYPE.VISA;
         int currentAccount = Integer.valueOf(userJsonObject.get("currentAccount").toString());
         String email = userJsonObject.get("email").toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate expiredDate = LocalDate.parse((userJsonObject.get("expiredDate")).toString(), formatter);
+        LocalDate expiredDate = DateTimeUtil.convertStringToLocalDate((userJsonObject.get("expiredDate")).toString());
         int id = Integer.valueOf(userJsonObject.get("id").toString());
         String name = userJsonObject.get("name").toString();
         String password = userJsonObject.get("password").toString();
 
         user = new User(currentAccount, balance, cardNumber, expiredDate, name, cardType, email, address, password);
+        // luu user vao bien static
         this.user = user;
         boolean isQuit = false;
         while (true) {
@@ -96,10 +99,13 @@ public class UserView {
 
     // chuyen tien
     public int transferMoney() {
+        User userBeneficiary = new User();
+        controllerUser = new ControllerUser();
+
         System.out.println("test");
-        System.out.println("User balance: " + user.balance);
+        System.out.println("User balance: " + user.getBalance());
         System.out.println("Sender information: " + user.getCardType());
-        System.out.println(user.cardNumber);
+        System.out.println(user.getCardNumber());
         System.out.println("Beneficiary information");
         System.out.println("[1] Enter beneficiary account");
         System.out.println("[2] Select beneficiary account");
@@ -108,12 +114,31 @@ public class UserView {
         switch (number) {
             case 1: {
                 System.out.println("Beneficiary account: ");
-                int currentAccount = scanner.nextInt();
-                User userBeneficiary = controllerUser.enterBeneficiary(currentAccount);
+                int beneficiaryCurrentAccount = scanner.nextInt();
+                JSONObject beneficiaryCurrentAccountJson = new JSONObject();
+                beneficiaryCurrentAccountJson.put("currentAccount", beneficiaryCurrentAccount);
+                //check beneficiary
+                userBeneficiary = controllerUser.checkBeneficiary(beneficiaryCurrentAccountJson);
                 if (userBeneficiary != null) {
+                    System.out.println("Amount: ");
                     int money = scanner.nextInt();
                     scanner.nextLine();
-                    controllerUser.transferMoney(money);
+
+                    JSONObject moneyTransactionJson = new JSONObject();
+                    moneyTransactionJson.put("moneyTransfer", money);
+                    moneyTransactionJson.put("senderCurrentAccount", user.getCurrentAccount());
+                    //check money
+                    controllerUser.checkMoneyOfSender(moneyTransactionJson);
+
+                    moneyTransactionJson.put("beneficiaryCurrentAccount", userBeneficiary.getCurrentAccount());
+                    // Date Time Transaction
+                    String dateTimeSendingTransaction = DateTimeUtil.convertLocalDateToString(LocalDate.now());
+                    moneyTransactionJson.put("dateTimeSendingTransaction", dateTimeSendingTransaction);
+                    controllerUser.requestSendingMoney(moneyTransactionJson);
+                    
+
+                }else{
+                    controllerUser.returnToUserView();
                 }
             }
             case 2: {
@@ -135,7 +160,14 @@ public class UserView {
 
     //nap tien dien thoai
     public int phoneRecharging() {
+        scanner = new Scanner(System.in);
         System.out.println("test");
+        int num = scanner.nextInt();
+        scanner.nextLine();
+        int currentAccount = user.getCurrentAccount();
+
+        
+        ControllerUser.checkMoney(num);
         return 0;
     }
 
@@ -152,5 +184,19 @@ public class UserView {
     //vay truc tuyen
     public int loan() {
         return 0;
+    }
+
+    public static void displayCheckVerification(JSONObject verifiJson) {
+        String verificationCode = verifiJson.get("verificationCode").toString();
+        String idOfThisTransaction = verifiJson.getString("id");
+        System.out.println(verificationCode);
+        System.out.println("Hay nhap verification code: ");
+        String code = scanner.nextLine();
+
+        JSONObject checkCodeJson = new JSONObject();
+        checkCodeJson.put("checkCode", code);
+        checkCodeJson.put("id", idOfThisTransaction);
+        ControllerUser.checkVerificationCode(checkCodeJson);
+        
     }
 }
