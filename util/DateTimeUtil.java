@@ -1,22 +1,22 @@
 package util;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeUtil {
     
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm");
     /**
      * convert from dd/MM/yyyy -> LocalDate
      * @param dateStr
      * @return
      */
-    public static LocalDate convertStringToLocalDate(String dateStr) {
-        return LocalDate.parse(dateStr, formatter);
+    public static LocalDateTime convertStringToLocalDate(String dateStr) {
+        return LocalDateTime.parse(dateStr, formatter);
     }
 
-    public static String convertLocalDateToString(LocalDate date) {
-        return date.format(formatter);
+    public static String convertLocalDateToString(LocalDateTime localDateTime) {
+        return localDateTime.format(formatter);
     }
 
 }

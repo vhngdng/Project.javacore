@@ -6,6 +6,14 @@ public class Person {
     protected int role;
     protected String name;
     protected int currentAccount;
+    private boolean isLocked = false;
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean isLocked) {
+        this.isLocked = isLocked;
+    }
 
     public int getCurrentAccount() {
         return this.currentAccount;
@@ -54,5 +62,11 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "currentAccount = " + currentAccount + ", id = " + id + ", isLocked = " + isLocked + ", name = " + name
+                + ", password = " + password;
     }
 }
