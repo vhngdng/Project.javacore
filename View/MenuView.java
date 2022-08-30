@@ -10,14 +10,14 @@ public class MenuView {
     private Scanner scanner;
     private LoginView loginView;
     private BookingView bookingView;
-    
+
     public MenuView() {
 
     }
 
     public static void displaySelection() {
         System.out.println("==========VCB Digibank==========");
-        System.out.println("============Welcome============="); 
+        System.out.println("============Welcome=============");
         System.out.println("[1] Sign-in");
         System.out.println("[2] VCB Booking");
         System.out.println("");
@@ -52,8 +52,6 @@ public class MenuView {
         }
         return true;
     }
-
-    
 
     /**
      * system quit
