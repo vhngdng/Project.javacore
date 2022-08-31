@@ -1,8 +1,7 @@
 package Controller;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -12,15 +11,15 @@ import Model.TransactionRepository;
 import Model.User;
 import Model.UserRepository;
 import View.AdminAccessView;
-import View.UserView;
+
 import util.DateTimeUtil;
 
 public class ControllerTransaction {
-    private static ControllerTransaction controllerTransaction;
 
     public static int transferMoney(JSONObject moneyTransactionJson) {
         Transaction transaction = ControllerTransaction.convertJsonObjectToTransaction(moneyTransactionJson);
         TransactionRepository.addTransaction(transaction);
+
         //chuyen tien
         return UserRepository.transferMoney(transaction);
     }
@@ -37,8 +36,8 @@ public class ControllerTransaction {
     }
 
     public void transactionHistory() {
-        
-        System.out.println(User.getUser().getTransactionsOfUser().toString());
+        List<Transaction>transactionHistory = TransactionRepository.getTransactionHistory();
+        System.out.println(transactionHistory.toString());
         ControllerUser.finishLine();
         ControllerUser.displayUserView();
         
@@ -65,5 +64,9 @@ public class ControllerTransaction {
 
     public static void transactionShowAll() {
         System.out.println(TransactionRepository.getTransactionList().toString());
+    }
+
+    public void showTransactionDetail() {
+
     }
 }

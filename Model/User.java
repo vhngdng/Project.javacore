@@ -17,8 +17,8 @@ public class User extends Person {
     // User login
     private static User user;
     private static int role = 1;
-    private List<Transaction> transactionsOfUser = new ArrayList<>();
-    private Map<Integer, Integer> mapOtherUser;
+
+   
 
     public User(int currentAccount, int balance, int cardNumber, LocalDateTime expiredDate2, String name,
             CARDTYPE cardType,
@@ -103,21 +103,8 @@ public class User extends Person {
         User.user = user;
     }
 
-    public Map<Integer, Integer> getMapOtherUser() {
-        return mapOtherUser;
-    }
 
-    public static void setMapOtherUser(Map<Integer, Integer> mapOtherUser) {
-        user.mapOtherUser = mapOtherUser;
-    }
-
-    public List<Transaction> getTransactionsOfUser() {
-        return this.transactionsOfUser;
-    }
-
-    public static void setTransactionsOfUser(List<Transaction> transactionsOfUser) {
-        User.getUser().transactionsOfUser = transactionsOfUser;
-    }
+  
 
     @Override
     public String toString() {

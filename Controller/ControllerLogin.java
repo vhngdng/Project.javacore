@@ -19,9 +19,10 @@ public class ControllerLogin {
     // private JSONObject userJson;
     //nhận dữ liệu từ view và tạo object
 
-    public static void loginViewDisplay() {
+    public static boolean loginViewDisplay() {
         
         LoginView.display();
+        return true;
     }
 
     public static void loginUser(JSONObject userInfo) {

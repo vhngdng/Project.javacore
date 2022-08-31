@@ -7,7 +7,7 @@ import Controller.ControllerUser;
 
 public class MenuView {
     private ControllerUser controllerUser;
-    private Scanner scanner;
+    public static Scanner scanner;
     private LoginView loginView;
     private BookingView bookingView;
 
@@ -20,6 +20,7 @@ public class MenuView {
         System.out.println("============Welcome=============");
         System.out.println("[1] Sign-in");
         System.out.println("[2] VCB Booking");
+        System.out.println("[3] Quit");
         System.out.println("");
 
     }
@@ -28,16 +29,21 @@ public class MenuView {
         scanner = new Scanner(System.in);
         boolean isQuit = false;
         while (true) {
-            scanner = new Scanner(System.in);
             displaySelection();
             int numSelect = scanner.nextInt();
+            scanner.nextLine();
             switch (numSelect) {
                 case 1: {
-                    ControllerLogin.loginViewDisplay();
+                    isQuit = ControllerLogin.loginViewDisplay();
                     break;
                 }
                 case 2: {
-                    BookingView.display();
+                    isQuit = BookingView.display();
+                    break;
+                }
+                case 3: {
+                    isQuit = true;
+                    break;
                 }
                 default:
                     break;
