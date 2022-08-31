@@ -163,7 +163,7 @@ public class ControllerUser {
             beneficiaryCurrentAccount = map.get(numSelect);
         } else {
             System.out.println("Beneficiary User is not valid");
-            UserView.transferProcess(map);
+//            UserView.transferProcess(map);
         }
 
         if (UserRepository.checkMoneyOfSender(money) == true) {
