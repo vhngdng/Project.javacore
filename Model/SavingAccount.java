@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.ControllerUser;
+import View.UserView;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class SavingAccount {
 
-    private  static  final double[] SavingInterestRate={ 0.0 , 3.7 , 4.1 , 4.5 , 4.8 };
+    private  static  final double[] SavingInterestRate={ 3.1 , 3.7, 4.1 , 4.5 , 4.8 };
     private  double savingBalence;//số tiền gửi
     private LocalDate sentDate; // ngày gửi
     private  double savingInterest; // lãi xuất
@@ -64,27 +65,56 @@ public class SavingAccount {
 
     }
     public void  savingsInformation(){
-        Transaction transaction = new Transaction();
-        ControllerUser controllerUser = new ControllerUser();
-        System.out.println("số tiền gửi  là  "+getSavingBalence());
-        System.out.println(" số tháng gửi là "+getMonthlyDeposit());
-        System.out.println(" với mức lãi xuất là "+getSavingInterest());
-        System.out.println(" ngày gửi "+ getSentDate());
-        System.out.println( " tổng số tiền lãi "+getSavingBalence()*getSavingInterest());
-        System.out.println(" bạn có đồng với ");
-        System.out.println( " [1]   đồng ý \n [2]   từ chối  ");
-        Scanner scanner = new Scanner(System.in );
-        int moinhap = scanner.nextInt();
-        if(moinhap ==1){
+        Scanner  scanner = new Scanner(System.in);
+        User user = User.getUser();
+       boolean curn = true ;
+        while (curn=true){
+            if(user.getBalance()>=getSavingBalence()){
+                Transaction transaction = new Transaction();
+                ControllerUser controllerUser = new ControllerUser();
+                System.out.println("số tiền gửi  là  "+getSavingBalence());
+                System.out.println(" số tháng gửi là "+getMonthlyDeposit());
+                System.out.println(" với mức lãi xuất là "+getSavingInterest());
+                System.out.println(" ngày gửi "+ getSentDate());
+                System.out.println( " tổng số tiền lãi "+getSavingBalence()*getSavingInterest()/100);
+                System.out.println(" bạn có đồng : ");
+                System.out.println( " [1]   đồng ý \n [2]   từ chối  ");
+                int moinhap = scanner.nextInt();
+                if(moinhap==1){
+                    System.out.println( " bạn đã gửi tiết kiệm thành công");
+                    user.setBalance((int) (user.getBalance() - getSavingBalence()));
+                    System.out.println(" số dư còn lại là  : "+user.getBalance());
+                    curn=false;
 
-        JSONObject moneyTransactionJson = new JSONObject();
-        moneyTransactionJson.put("moneyTransfer",(int) getSavingBalence());
-        // check money
-        controllerUser.checkMoneyOfSender(moneyTransactionJson);
-            User user = User.getUser();
-            user.setBalance((int) (user.getBalance() - getSavingBalence()));
-            System.out.println(" số dư còn lại là  : "+user.getBalance());
+
+                }else {
+                    System.out.println("bạn đã từ chối gửi tiết kiệm");
+
+                }
+
+
+
+            }else {
+
+                System.out.println("số tiền gửi không thể lớn hơn số dư tài khoản ");
+                System.out.println( " mời bạn nhập lại số tiền ");
+                savingBalence  = scanner.nextDouble();
+
+            }
+
         }
+
+
+
+
+//        JSONObject moneyTransactionJson = new JSONObject();
+//        moneyTransactionJson.put("moneyTransfer",(int) getSavingBalence());
+//        // check money
+//            controllerUser.checkMoneyOfSender(moneyTransactionJson);
+
+//            user.setBalance((int) (user.getBalance() - getSavingBalence()));
+//            System.out.println(" số dư còn lại là  : "+user.getBalance());
+//        }
 
 
 
