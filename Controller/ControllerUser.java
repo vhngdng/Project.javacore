@@ -2,6 +2,7 @@ package Controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -139,10 +140,14 @@ public class ControllerUser {
         UserView.display(jsonObject);
     }
 
-    public void selectBeneficiary() {
+    public Map<Integer, Integer> selectBeneficiary() {
         System.out.println("List of beneficiary Users");
         Map<Integer, Integer> map = UserRepository.showOtherUsers();
-        User.getUser().setMapOtherUser(map);
+        for (Map.Entry<Integer, Integer> maplist : map.entrySet()) {
+            System.out.println("[" + maplist.getKey() + "]" + " User name: " + UserRepository.getNameOfUser(maplist.getValue())
+                    + ", current account: " + maplist.getValue());
+        }
+        return map;
     }
 
     public void logOut() {
@@ -151,18 +156,19 @@ public class ControllerUser {
         menuView.display();
     }
 
-    public static void checkConditionValid(int numSelect, int money) {
-        int beneficiaryCurrentAccount = 0;;
-        if (numSelect <= User.getUser().getMapOtherUser().size()) {
+    public static void checkConditionValid(int numSelect, int money, Map<Integer, Integer> map) {
+        int beneficiaryCurrentAccount = 0;
+        if (numSelect <= map.size()) {
             System.out.println("Beneficiary User is valid");
-            beneficiaryCurrentAccount = User.getUser().getMapOtherUser().get(numSelect);
-        }else{
+            beneficiaryCurrentAccount = map.get(numSelect);
+        } else {
             System.out.println("Beneficiary User is not valid");
-            UserView.transferProcess();
+            UserView.transferProcess(map);
         }
 
         if (UserRepository.checkMoneyOfSender(money) == true) {
-            Transaction transaction = new Transaction(User.getUser().getCurrentAccount(), beneficiaryCurrentAccount, money, LocalDateTime.now());
+            Transaction transaction = new Transaction(User.getUser().getCurrentAccount(), beneficiaryCurrentAccount,
+                    money, LocalDateTime.now());
             UserRepository.transferMoney(transaction);
             ControllerUser controllerUser = new ControllerUser();
             UserView.display(controllerUser.convertObjectToJson(User.getUser()));
@@ -172,6 +178,14 @@ public class ControllerUser {
 
     public void showBalanceMoney() {
         System.out.println("Số dư của bạn là: " + User.getUser().getBalance());
+    }
+
+    public static void showResultTransactionBeneficiary(int id, int senderCurrentAccount) {
+        Transaction transaction = TransactionRepository.getTransactionById(id);
+        System.out.println("Số dư TK VCB " + senderCurrentAccount + " -" + transaction.getMoney() + "VND, lúc "
+                + transaction.getDateTimeTransaction().withNano(0) + " " + ".Ref MBVCB." + transaction.getBeneficiaryCurrentAccount()
+                + "." + UserRepository.getNameOfUser(senderCurrentAccount) + " chuyển tiền. CT tu "
+                + senderCurrentAccount + " toi " + transaction.getBeneficiaryCurrentAccount());
     }
 
 }

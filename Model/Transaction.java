@@ -9,6 +9,7 @@ public class Transaction {
     protected int money;
     protected LocalDateTime dateTimeTransaction;
     protected boolean isValid;
+    protected int id;
 
     public Transaction(int senderCurrentAccount, int beneficiaryCurrentAccount, int money,
             LocalDateTime dateTimeTransaction2) {
@@ -27,16 +28,13 @@ public class Transaction {
     }
 
     public int getMoney() {
-        return money;
+        return this.money;
     }
 
     public LocalDateTime getDateTimeTransaction() {
-        return dateTimeTransaction;
+        return this.dateTimeTransaction;
     }
 
-    public boolean isResult() {
-        return isValid;
-    }
 
     public int getSenderCurrentAccount() {
         return this.senderCurrentAccount;
@@ -46,11 +44,38 @@ public class Transaction {
         this.isValid = b;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
+    }
     @Override
     public String toString() {
         return "Transaction" + "\nsenderCurrentAccount = " + senderCurrentAccount + ", beneficiaryCurrentAccount = "
                 + beneficiaryCurrentAccount + ", dateTimeTransaction = "
                 + dateTimeTransaction + ", money = " + money + ", result = " + isValid;
+    }
+
+    public void setSenderCurrentAccount(int senderCurrentAccount) {
+        this.senderCurrentAccount = senderCurrentAccount;
+    }
+
+    public void setBeneficiaryCurrentAccount(int beneficiaryCurrentAccount) {
+        this.beneficiaryCurrentAccount = beneficiaryCurrentAccount;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public void setDateTimeTransaction(LocalDateTime dateTimeTransaction) {
+        this.dateTimeTransaction = dateTimeTransaction;
+    }
+
+    public boolean isValid() {
+        return this.isValid;
     }
 
 }

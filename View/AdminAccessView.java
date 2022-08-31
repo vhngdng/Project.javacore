@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import Controller.ControllerAdmin;
+import Controller.ControllerBooking;
 import Controller.ControllerTransaction;
 import Controller.ControllerUser;
 import Model.Admin;
@@ -26,7 +27,9 @@ public class AdminAccessView {
         System.out.println("[1] Lock/Unlock User");
         System.out.println("[2] List of User");
         System.out.println("[3] Transaction");
-        System.out.println("[4] Exit to main");
+        System.out.println("[4] Show booking list");
+        System.out.println("[5] Exit to main");
+        System.out.println("[6] Quit");
     }
 
     public static void displayTransactionSelection() {
@@ -42,7 +45,7 @@ public class AdminAccessView {
 
     public static void display() {
         MenuView menuView = new MenuView();
-        boolean isBoolean = false;
+        boolean isQuit = false;
         scanner = new Scanner(System.in);
         while (true) {
             displaySelection();
@@ -99,11 +102,24 @@ public class AdminAccessView {
                     break;
                 }
                 case 4: {
+                    ControllerBooking.showBookingList();
+                    break;
+                }
+                case 5: {
                     menuView.display();
+                    break;
+                }
+                case 6: {
+                    isQuit = true;
                     break;
                 }
                 default:
                     break;
+                
+            }
+        
+            if(isQuit == true) {
+                break;
             }
         }
     }
