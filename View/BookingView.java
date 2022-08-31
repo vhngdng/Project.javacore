@@ -2,15 +2,12 @@ package View;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
-import javax.sound.sampled.SourceDataLine;
-
 import Controller.ControllerBooking;
 import Model.Booking;
 import util.DateTimeUtil;
 
 public class BookingView {
-    private static Scanner scanner;
+    private Scanner scanner;
 
     public static void displaySelection() {
         System.out.println("==========VCB Digibank==========");
@@ -26,13 +23,13 @@ public class BookingView {
         System.out.println("[3] Đà Nẵng");
     }
 
-    public static boolean display() {
+    public boolean display() {
         boolean isValid = false;
         String address = null;
         scanner = new Scanner(System.in);
         displaySelection();
         System.out.println("Nhập tên");
-        String name = scanner.nextLine();
+        String name  = scanner.nextLine();
         System.out.println("Nhập email");
         String email = scanner.nextLine();
         System.out.println("Nhập số điện thoại");
@@ -80,9 +77,7 @@ public class BookingView {
             }
         }
 
-        // ControllerBooking.chooseAddress(numSelect);
-
-        Booking booking = new Booking(name, address, phoneNumber, date);
+        Booking booking = new Booking(name, address, email, phoneNumber, date);
         ControllerBooking.registerBooking(booking);
 
         return false;
@@ -110,4 +105,6 @@ public class BookingView {
         System.out.println("[3] Quận Hòa Vang");
         System.out.println("[4] Quận Liên Chiều");
     }
+
+
 }

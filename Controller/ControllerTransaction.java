@@ -15,7 +15,7 @@ import View.AdminAccessView;
 import util.DateTimeUtil;
 
 public class ControllerTransaction {
-
+    private AdminAccessView adminAccessView = new AdminAccessView();
     public static int transferMoney(JSONObject moneyTransactionJson) {
         Transaction transaction = ControllerTransaction.convertJsonObjectToTransaction(moneyTransactionJson);
         TransactionRepository.addTransaction(transaction);
@@ -36,10 +36,11 @@ public class ControllerTransaction {
     }
 
     public void transactionHistory() {
+        ControllerUser controllerUser = new ControllerUser();
         List<Transaction>transactionHistory = TransactionRepository.getTransactionHistory();
         System.out.println(transactionHistory.toString());
         ControllerUser.finishLine();
-        ControllerUser.displayUserView();
+        controllerUser.displayUserView();
         
     }
 
@@ -47,19 +48,19 @@ public class ControllerTransaction {
 
     }
 
-    public static void transactionDayList (int num) {
+    public void transactionDayList (int num) {
         TransactionRepository.transactionDateShow(num);
-        AdminAccessView.display();
+        adminAccessView.display();
     }
 
-    public static void transactionMonthList (int num) {
+    public void transactionMonthList (int num) {
         TransactionRepository.transactionMonthShow(num);
-        AdminAccessView.display();
+        adminAccessView.display();
     }
 
-    public static void transactionYearList (int num) {
+    public void transactionYearList (int num) {
         TransactionRepository.transactionYearShow(num);
-        AdminAccessView.display();
+        adminAccessView.display();
     }
 
     public static void transactionShowAll() {

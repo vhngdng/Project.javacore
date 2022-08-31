@@ -55,7 +55,7 @@ public class Transaction {
     public String toString() {
         return "Transaction" + "\nsenderCurrentAccount = " + senderCurrentAccount + ", beneficiaryCurrentAccount = "
                 + beneficiaryCurrentAccount + ", dateTimeTransaction = "
-                + dateTimeTransaction + ", money = " + money + ", result = " + isValid;
+                + dateTimeTransaction.withNano(0) + ", money = " + money + ", result = " + isValid;
     }
 
     public void setSenderCurrentAccount(int senderCurrentAccount) {

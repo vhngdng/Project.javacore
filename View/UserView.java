@@ -8,16 +8,16 @@ import java.util.Scanner;
 
 import org.json.JSONObject;
 
-
 import Controller.ControllerTransaction;
 import Controller.ControllerUser;
 import Model.User;
 import util.DateTimeUtil;
 
 public class UserView {
-    private static Scanner scanner;
-    private static ControllerUser controllerUser = new ControllerUser();
-    private static ControllerTransaction controllerTransaction = new ControllerTransaction();
+    private Scanner scanner = new Scanner(System.in);
+    private static ControllerUser controllerUser;
+    private static ControllerTransaction controllerTransaction;
+
     public static void displaySelection() {
         System.out.println("==========VCB Digibank==========");
         System.out.println("============Welcome=============");
@@ -32,14 +32,21 @@ public class UserView {
         System.out.println("[9] Thoát");
     }
 
-    public static void display(JSONObject userJson) {
-        // User user = controllerUser.convertJsonToUser(user2);
-
+    public void display(JSONObject userJson) {
+        controllerUser = new ControllerUser();
+        controllerTransaction = new ControllerTransaction();
+        MenuView menuView = new MenuView();
         boolean isQuit = false;
         while (true) {
             scanner = new Scanner(System.in);
             displaySelection();
-            int numSelect = scanner.nextInt();
+            int numSelect = 0;
+            try{
+            numSelect = scanner.nextInt();
+            scanner.nextLine();
+            }catch(Exception e){
+                return;
+            }
             switch (numSelect) {
                 case 1: {
                     controllerUser.showBalanceMoney();
@@ -81,15 +88,20 @@ public class UserView {
                 default:
                     break;
             }
-
             if (isQuit == true) {
-                break;
+                menuView.quit();
             }
         }
     }
 
+    // close view
+    public void close() {
+        if (this.scanner != null) {
+            this.scanner.close();
+        }
+    }
 
-    // chuyen tien
+    // chuyen tien menu
     public void transferMoney(User user) {
         ControllerUser controllerUser = new ControllerUser();
         System.out.println("test");
@@ -107,6 +119,7 @@ public class UserView {
                 int beneficiaryCurrentAccount = scanner.nextInt();
                 JSONObject beneficiaryCurrentAccountJson = new JSONObject();
                 beneficiaryCurrentAccountJson.put("currentAccount", beneficiaryCurrentAccount);
+
                 // check beneficiary
                 User userBeneficiary = controllerUser.checkBeneficiary(beneficiaryCurrentAccountJson);
                 if (userBeneficiary != null) {
@@ -117,21 +130,22 @@ public class UserView {
 
                     JSONObject moneyTransactionJson = new JSONObject();
                     moneyTransactionJson.put("moneyTransfer", money);
+
                     // check money
                     controllerUser.checkMoneyOfSender(moneyTransactionJson);
 
                     moneyTransactionJson.put("beneficiaryCurrentAccount",
                             String.valueOf(userBeneficiary.getCurrentAccount()));
+
                     // Date Time Transaction
                     String dateTimeSendingTransaction = DateTimeUtil.convertLocalDateToString(LocalDateTime.now());
                     moneyTransactionJson.put("dateTimeSendingTransaction", dateTimeSendingTransaction);
                     moneyTransactionJson.put("senderCurrentAccount", String.valueOf(user.getCurrentAccount()));
 
                     ControllerTransaction.transferMoney(moneyTransactionJson);
-                    
 
                 } else {
-                    ControllerUser.displayUserView();
+                    controllerUser.displayUserView();
                 }
                 break;
             }
@@ -148,12 +162,12 @@ public class UserView {
 
     }
 
-    public static void transferProcess(Map<Integer, Integer> map) {
+    public void transferProcess(Map<Integer, Integer> map) {
         System.out.println("Select the beneficiary: ");
         int numSelect = scanner.nextInt();
         scanner.nextLine();
         System.out.println("Amount: ");
         int money = scanner.nextInt();
-        ControllerUser.checkConditionValid(numSelect, money, map);
+        controllerUser.checkConditionValid(numSelect, money, map);
     }
 }

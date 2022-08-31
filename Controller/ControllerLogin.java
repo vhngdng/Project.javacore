@@ -15,19 +15,21 @@ import View.UserView;
 import util.DateTimeUtil;
 
 public class ControllerLogin {
-    // LoginView loginView = new LoginView();
+    private LoginView loginView;
+    private AdminAccessView adminAccessView;
+    private UserView userView;
     // private JSONObject userJson;
     //nhận dữ liệu từ view và tạo object
 
-    public static boolean loginViewDisplay() {
-        
-        LoginView.display();
+    public boolean loginViewDisplay() {
+        loginView = new LoginView();
+        loginView.display();
         return true;
     }
 
-    public static void loginUser(JSONObject userInfo) {
-       
-        UserView userView = new UserView();
+    public void loginUser(JSONObject userInfo) {
+        adminAccessView = new AdminAccessView();
+        userView = new UserView();
         Person person = new User();
         String name = userInfo.get("name").toString();
         String password = userInfo.get("password").toString();
@@ -39,10 +41,9 @@ public class ControllerLogin {
         Person checkedPerson = UserRepository.checkLoginUser(person);
         
         if (checkedPerson == null) {
-            LoginView.display();
+            loginView.display();
         }else{
             if (checkedPerson.getRole() == -1) {
-                AdminAccessView adminAccessView = new AdminAccessView();
                 adminAccessView.display();
             }else{
                 User user = (User) checkedPerson;
