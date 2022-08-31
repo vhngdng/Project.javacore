@@ -6,14 +6,14 @@ import java.time.temporal.ChronoUnit;
 
 public class DateTimeUtil {
     
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH:mm:ss");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH:mm");
     /**
      * convert from dd/MM/yyyy -> LocalDate
      * @param dateStr
      * @return
      */
     public static LocalDateTime convertStringToLocalDate(String dateStr) {
-        return LocalDateTime.parse(dateStr, formatter).truncatedTo(ChronoUnit.SECONDS);
+        return LocalDateTime.parse(dateStr, formatter);
     }
 
     public static String convertLocalDateToString(LocalDateTime localDateTime) {
