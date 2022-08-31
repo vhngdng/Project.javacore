@@ -179,7 +179,7 @@ public class ControllerUser {
         Transaction transaction = TransactionRepository.getTransactionById(id);
         System.out.println("Số dư TK VCB " + senderCurrentAccount + " -" + transaction.getMoney() + "VND, lúc "
                 + transaction.getDateTimeTransaction().withNano(0) + " " + ".Ref MBVCB." + transaction.getBeneficiaryCurrentAccount()
-                + "." + UserRepository.getNameOfUser(senderCurrentAccount) + " chuyển tiền. CT tu "
+                + "." + UserRepository.getNameOfUser(transaction.getBeneficiaryCurrentAccount()) + " chuyển tiền. CT tu "
                 + senderCurrentAccount + " toi " + transaction.getBeneficiaryCurrentAccount());
     }
 
