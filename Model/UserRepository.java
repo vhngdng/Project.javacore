@@ -16,7 +16,6 @@ public class UserRepository {
     private static int USER_COUNT = 1;
     User user;
     Person person;
-    private static Map<Integer, String> userList = new LinkedHashMap<>();
     private static List<Person> personList = new ArrayList<>();
     private static int id = 0;
 
@@ -42,7 +41,6 @@ public class UserRepository {
         person.setId(id);
         person.setRole(1);
         personList.add(person);
-        userList.put(person.getCurrentAccount(), person.name);
         USER_COUNT++;
         return person;
     }
@@ -88,11 +86,11 @@ public class UserRepository {
             }
         }
         if (person.isLocked() == true) {
-                person = null;
-                System.out.println("Tài khoản đã bị khóa, không thể đăng nhập");
-                MenuView menuView = new MenuView();
-                menuView.display();
-        }else if (person.getRole() != -1 && person.getRole() != 1) {
+            person = null;
+            System.out.println("Tài khoản đã bị khóa, không thể đăng nhập");
+            MenuView menuView = new MenuView();
+            menuView.display();
+        } else if (person.getRole() != -1 && person.getRole() != 1) {
             person = null;
             System.out.println("sai thông tin đăng nhập, vui lòng nhập lại");
         }
@@ -163,14 +161,13 @@ public class UserRepository {
         return false;
     }
 
-
     public static User findUserWithId(int id) {
         return null;
     }
 
     // chuyen tien
     public static int transferMoney(Transaction transaction) {
-        
+
         User benefiUser = getUserWithCurrentAccount(transaction.getBeneficiaryCurrentAccount());
         User sendUser = getUserWithCurrentAccount(transaction.getSenderCurrentAccount());
         if (benefiUser == sendUser) {
@@ -179,26 +176,29 @@ public class UserRepository {
         }
         int money = transaction.getMoney();
         benefiUser.setBalance(benefiUser.getBalance() + money);
+
         sendUser.setBalance(sendUser.getBalance() - money);
         transaction.setValid(true);
         // add transaction in user
-        TransactionRepository.addTransactionUser(User.getUser().getCurrentAccount());
+        TransactionRepository.addTransaction(transaction);
+        int id = transaction.getId();
+        ControllerUser.showResultTransactionBeneficiary(id, transaction.getSenderCurrentAccount());
         System.out.println("Số tiền còn dư của bạn :" + sendUser.getBalance());
         return sendUser.getBalance();
     }
 
     public static boolean checkIdOrCurrentAccount(int num) {
-        boolean isValid = false;        
+        boolean isValid = false;
         for (Person personL : personList) {
             if (num == personL.getCurrentAccount() || num == personL.getId()) {
-                
+
                 personL.setLocked(true);
                 System.out.println("Tai khoan cua " + personL.getName() + ", số tk: " + personL.getCurrentAccount()
                         + " đã bị khóa");
                 isValid = true;
                 break;
             }
-            
+
         }
         if (isValid == false) {
             System.out.println("sai thông tin");
@@ -207,8 +207,8 @@ public class UserRepository {
     }
 
     public static void getListUser() {
-        
-        for (Person personL: personList) {
+
+        for (Person personL : personList) {
             if (personL.getRole() != -1) {
                 User user = (User) personL;
                 System.out.println(user.toString());
@@ -217,17 +217,27 @@ public class UserRepository {
     }
 
     public static Map<Integer, Integer> showOtherUsers() {
-        int i = 1;
         Map<Integer, Integer> map = new LinkedHashMap<>();
-        for (Map.Entry<Integer, String> entry: userList.entrySet() ) {
-            if (entry.getKey() != User.getUser().getCurrentAccount()) {
-            System.out.println("[" + i + "]" + " User: " + entry.getValue() + ", current account: " + entry.getKey());
-            map.put(i, entry.getKey());
-            i++;
+        int i = 1;
+        for (Person uList : personList) {
+            if (uList.getCurrentAccount() != User.getUser().getCurrentAccount() && uList.getCurrentAccount() != 0) {
+                map.put(i, uList.getCurrentAccount());
+                i++;
             }
         }
         return map;
 
+    }
+
+    public static String getNameOfUser(int currentAccount) {
+        String name = "";
+        for (Person personL : personList) {
+            if (personL != null & personL.getCurrentAccount() == currentAccount) {
+                name = personL.getName();
+                break;
+            }
+        }
+        return name;
     }
 
 }

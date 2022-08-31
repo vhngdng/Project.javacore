@@ -2,6 +2,7 @@ package View;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -46,6 +47,7 @@ public class UserView {
                 }
                 case 2: {
                     controllerUser.transferMoney();
+                    controllerTransaction.showTransactionDetail();
                     break;
                 }
                 case 3: {
@@ -66,12 +68,16 @@ public class UserView {
                 }
                 case 7: {
                     controllerTransaction.transactionHistory();
+                    break;
                 }
                 case 8: {
                     controllerUser.logOut();
                     break;
                 }
-                
+                case 9: {
+                    isQuit = true;
+                    break;
+                }
                 default:
                     break;
             }
@@ -80,23 +86,8 @@ public class UserView {
                 break;
             }
         }
-        if (isQuit == true) {
-            quit();
-        }
-        return;
     }
 
-    private static void quit() {
-        System.out.println("Hen gap lai !!!");
-        close();
-    }
-
-    // close view
-    public static void close() {
-        if (scanner != null) {
-            scanner.close();
-        }
-    }
 
     // chuyen tien
     public void transferMoney(User user) {
@@ -145,8 +136,8 @@ public class UserView {
                 break;
             }
             case 2: {
-                controllerUser.selectBeneficiary();
-                transferProcess();
+                Map<Integer, Integer> map = controllerUser.selectBeneficiary();
+                transferProcess(map);
             }
             case 3: {
                 display(controllerUser.getUserLoginJson());
@@ -157,13 +148,12 @@ public class UserView {
 
     }
 
-    public static void transferProcess() {
+    public static void transferProcess(Map<Integer, Integer> map) {
         System.out.println("Select the beneficiary: ");
         int numSelect = scanner.nextInt();
         scanner.nextLine();
         System.out.println("Amount: ");
         int money = scanner.nextInt();
-        ControllerUser.checkConditionValid(numSelect, money);
-       
+        ControllerUser.checkConditionValid(numSelect, money, map);
     }
 }
