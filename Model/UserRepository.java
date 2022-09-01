@@ -249,4 +249,17 @@ public class UserRepository {
         return name;
     }
 
+    // online borrowing
+    public static int onlineBorrowing(BorrowingTransaction borrowingTransaction, User borrowingUser) {
+        int money = borrowingTransaction.getMoney();
+        borrowingUser.setBalance(borrowingUser.getBalance() + money);
+        // Helen: transaction.setValid(true); not use this
+        // add transaction in user
+        TransactionRepository.addBorrowingTransaction(borrowingTransaction);
+        int id = borrowingTransaction.getId();
+        // Helen: ControllerUser.showResultTransactionBeneficiary(id, transaction.getSenderCurrentAccount());
+        System.out.println("Số dư hiện tại của bạn :" + borrowingUser.getBalance());
+        return borrowingUser.getBalance();
+    }
+
 }

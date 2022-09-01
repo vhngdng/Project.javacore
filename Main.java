@@ -1,17 +1,11 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import Model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Controller.ControllerUser;
-import Model.Admin;
-import Model.CARDTYPE;
-import Model.Person;
-import Model.Transaction;
-import Model.TransactionRepository;
-import Model.User;
-import Model.UserRepository;
 import View.LoginView;
 import View.MenuView;
 
@@ -24,7 +18,7 @@ public class Main {
         user1.setId(11);
         user1.setRole(1);
         User user2 = new User(2, 19832000,
-                762862123, LocalDateTime.of(2022, 7, 5, 12, 29, 29), "2",
+                762862123, LocalDateTime.of(2023, 7, 5, 12, 29, 29), "2",
                 CARDTYPE.DEBIT, "vhngdng", "10 quan thanh", "2");
         user2.setId(12);
         user2.setRole(1);
@@ -36,6 +30,8 @@ public class Main {
         TransactionRepository.addTransaction(transaction1);
         MenuView menuView = new MenuView();
         menuView.display();
+        BorrowingTransaction borrowingTransaction1 = new BorrowingTransaction(2,5000000,LocalDateTime.now());
+        TransactionRepository.addBorrowingTransaction(borrowingTransaction1);
 
     }
 }

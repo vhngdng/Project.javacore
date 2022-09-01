@@ -118,13 +118,13 @@ public class ControllerUser {
         System.out.println("=========================================================================================");
     }
 
-    public void displayUserView() {
+    public static void displayUserView() {
         ControllerUser controllerUser = new ControllerUser();
-        userView = new UserView();
+
         User user = User.getUser();
         JSONObject jsonObject = new JSONObject();
         jsonObject = controllerUser.convertObjectToJson(user);
-        userView.display(jsonObject);
+
     }
 
     public Map<Integer, Integer> selectBeneficiary() {
@@ -176,4 +176,9 @@ public class ControllerUser {
                 + senderCurrentAccount + " toi " + transaction.getBeneficiaryCurrentAccount());
     }
 
+    public void onlineBorrowing() {
+        User user = User.getUser();
+        userView = new UserView();
+        userView.onlineBorrowing(user);
+    }
 }

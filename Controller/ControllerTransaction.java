@@ -4,12 +4,9 @@ package Controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import Model.*;
 import org.json.JSONObject;
 
-import Model.Transaction;
-import Model.TransactionRepository;
-import Model.User;
-import Model.UserRepository;
 import View.AdminAccessView;
 
 import util.DateTimeUtil;
@@ -69,5 +66,12 @@ public class ControllerTransaction {
 
     public void showTransactionDetail() {
 
+    }
+
+    public static int moneyDisbursement(BorrowingTransaction borrowingTransaction, User borrowingUser) {
+        TransactionRepository.addBorrowingTransaction(borrowingTransaction);
+
+        //online borrowing
+        return UserRepository.onlineBorrowing(borrowingTransaction, borrowingUser);
     }
 }

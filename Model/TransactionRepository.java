@@ -79,4 +79,16 @@ public class TransactionRepository {
         }
         return transactionHistory;
     }
+
+    private static int borrowingTransactionCount = 0;
+    private static int borrowingTransactionId = 1;
+    private static List<BorrowingTransaction> listBorrowingTransaction = new ArrayList<>();
+    public static int addBorrowingTransaction(BorrowingTransaction borrowingTransaction) {
+        // Helen: if (transaction.isValid() == true)
+        borrowingTransactionCount += 1;
+        borrowingTransaction.setId(id);
+        id++;
+        listBorrowingTransaction.add(borrowingTransaction);
+        return borrowingTransactionCount;
+    }
 }

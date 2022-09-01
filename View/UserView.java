@@ -1,11 +1,15 @@
 package View;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Scanner;
 
+import Controller.ControllerSchedule;
+import Model.BorrowingTransaction;
 import org.json.JSONObject;
 
 import Controller.ControllerTransaction;
@@ -70,7 +74,7 @@ public class UserView {
                     break;
                 }
                 case 6: {
-                    controllerUser.loan();
+                    controllerUser.onlineBorrowing();
                     break;
                 }
                 case 7: {
@@ -169,5 +173,67 @@ public class UserView {
         System.out.println("Amount: ");
         int money = scanner.nextInt();
         controllerUser.checkConditionValid(numSelect, money, map);
+    }
+
+    // online borrowing
+    public void onlineBorrowing(User user) {
+        ControllerUser controllerUser = new ControllerUser();
+        //System.out.println("test");//Helen: not use this
+        System.out.println("Sender information: " + user.getCardType());
+        System.out.println("User balance: " + user.getBalance());
+        System.out.println("User card number: "+user.getCardNumber());
+
+        System.out.println("[1] Consumer loan");
+        System.out.println("[2] Loan for real estate/car purchase or business/manufacturing purpose");
+
+        int number = scanner.nextInt();
+        switch (number) {
+            case 1: {
+                // check amount to borrow
+                int facility = (int)(0.75 * user.getBalance());
+                scanner.nextLine();
+                System.out.println("Amount to borrow: ");
+                int moneyToBorrow = scanner.nextInt();
+                scanner.nextLine();
+                if (moneyToBorrow < facility) {
+                    double yearlyInterestRate = 0.18;
+                    System.out.println("Interest:" + yearlyInterestRate);
+                    System.out.println("1: accept interest/2: not accept interest");
+                    int userAcceptanceOfInterest = scanner.nextInt();
+                    if (userAcceptanceOfInterest == 1) {
+                        System.out.println("Press 1,2,3,6,9,12 (for 1,2,3,6,9,12) months to choose term");
+                        int termOfBorrowing = scanner.nextInt();
+                        double timeToExpiredDateInDays = Duration.between(LocalDateTime.now(),user.getExpiredDate()).toDays();
+                        System.out.println(timeToExpiredDateInDays);
+                        double timeToExpiredDateInMonths = timeToExpiredDateInDays/30;
+                        System.out.println("Time to Expired Date In Months: "+timeToExpiredDateInMonths);
+                        if (termOfBorrowing < timeToExpiredDateInMonths){
+                            System.out.println("Interest to be paid on the day of disbursement date each month");
+                            System.out.println("Principal to be paid on the day of disbursement date each month");
+                            System.out.println("Schedule of payment as follows");
+                            ControllerSchedule.scheduleOfPayment(yearlyInterestRate,termOfBorrowing,moneyToBorrow);//Helen: required to be static???
+                            System.out.println("Did anyone in your family borrow money from bank");
+                            System.out.println("Terms and conditions: I confirm that");
+                            System.out.println("This loan purpose is to make payment for personal/family consumption");
+                            System.out.println("The interest and principal payment would be made on time");
+                            System.out.println("My income is sufficient for repaying the loan");
+                            System.out.println("1 - if you read, understand and agree with these terms and conditions of this credit product; 2 - if not");
+                            int agreeWithTerms = scanner.nextInt();
+                            if (agreeWithTerms == 1) {
+                                BorrowingTransaction borrowingTransaction = new BorrowingTransaction(user.getCurrentAccount(),moneyToBorrow,LocalDateTime.now());
+                                ControllerTransaction.moneyDisbursement(borrowingTransaction,user);
+                            }
+                        }
+                    }
+                } else {
+                    ControllerUser.displayUserView();//Helen: change to static?? why transfer not required
+                }
+                break;
+            }
+            case 2: {
+                System.out.println("Please call our hotline for your loan consulation");
+                break;
+            }
+        }
     }
 }
