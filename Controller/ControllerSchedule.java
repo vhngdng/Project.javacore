@@ -1,43 +1,79 @@
 package Controller;
 
-
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Scanner;
 
-import org.json.JSONObject;
-
-import Model.Transaction;
-import Model.TransactionRepository;
+import Model.BorrowingTransaction;
 import Model.User;
-import Model.UserRepository;
-import View.AdminAccessView;
-
-import util.DateTimeUtil;
-
+import View.UserView;
 
 public class ControllerSchedule {
-    public static void scheduleOfPayment(double yearlyInterestRate, int termOfBorrowing, int moneyToBorrow){
-        double monthlyInterestRate = yearlyInterestRate/12; //Monthly interest rate
-        int principal = moneyToBorrow;
+    private Scanner scanner;
 
+    public static void scheduleOfPayment(double yearlyInterestRate, int termOfBorrowing, int moneyToBorrow) {
+        double monthlyInterestRate = yearlyInterestRate / 12; // Monthly interest rate
+        int principal = moneyToBorrow;
 
         System.out.println("\n\n\t Loan Schedule\n\n" +
                 "Principle Amount: \t" + principal +
-                "\nAnnual Interest Rate : \t" + yearlyInterestRate  +
+                "\nAnnual Interest Rate : \t" + yearlyInterestRate +
                 "\nTerm (Months): \t" + termOfBorrowing);
 
-        System.out.printf("%-30s %-30s %-30s %-30s %-30s\n","Payment Term No.","Remaining Principal","Principal Payment","Interest Payment","Monthly Payment");
-        System.out.printf("%-30s %-30s %-30s %-30s %-30s\n",
-                0,principal," "," "," ");
+        System.out.printf("%-30s %-30s %-30s %-30s %-30s\n", "Payment Term No.", "Remaining Principal",
+                "Principal Payment", "Interest Payment", "Monthly Payment");
+        System.out.printf("%-30s %-30s %-30s %-30s %-30s\n", 0, principal, " ", " ", " ");
         for (int i = 1; i <= termOfBorrowing; i++) {
             double principalPayment = principal / termOfBorrowing;
-            double remainingPrincipal = principal - principalPayment*i;
-            double interestPayment = (remainingPrincipal+principalPayment) * monthlyInterestRate;
+            double remainingPrincipal = principal - principalPayment * i;
+            double interestPayment = (remainingPrincipal + principalPayment) * monthlyInterestRate;
             double monthlyPayment = principalPayment + interestPayment;
-            if (i==termOfBorrowing){monthlyPayment = principalPayment + interestPayment +remainingPrincipal;}
+            if (i == termOfBorrowing) {
+                monthlyPayment = principalPayment + interestPayment + remainingPrincipal;
+            }
             System.out.printf("%-30s %-30s %-30s %-30s %-30s\n",
-                    i,remainingPrincipal,principalPayment,interestPayment,monthlyPayment);
+                    i, remainingPrincipal, principalPayment, interestPayment, monthlyPayment);
         }
 
     }
+
+    public static void checkTermRead(int moneyToBorrow) {
+            BorrowingTransaction borrowingTransaction = new BorrowingTransaction(User.getUser().getCurrentAccount(),
+                    moneyToBorrow, LocalDateTime.now());
+            ControllerTransaction.moneyDisbursement(borrowingTransaction, User.getUser());
+            ControllerUser.displayUserView();
+
+    }
+    // show the term and calculate the expire date
+    public static void continueAcceptingInterest(int termOfBorrowing, int moneyToBorrow) {
+        double yearlyInterestRate = 0.18;
+        double timeToExpiredDateInDays = Duration
+                .between(LocalDateTime.now(), User.getUser().getExpiredDate())
+                .toDays();
+        System.out.println(timeToExpiredDateInDays);
+        double timeToExpiredDateInMonths = timeToExpiredDateInDays / 30;
+        System.out.println("Time to Expired Date In Months: " + timeToExpiredDateInMonths);
+        if (termOfBorrowing < timeToExpiredDateInMonths) {
+            UserView userView = new UserView();
+            userView.scheduleOfPayment();
+            ControllerSchedule.scheduleOfPayment(yearlyInterestRate, termOfBorrowing,
+                    moneyToBorrow); // static???
+            userView.termAndCondition(moneyToBorrow);
+
+        }else {
+            System.out.println("You cannot loan the money, your card is expired");
+            ControllerUser.displayUserView();
+        }
+    }
+
+    // check money to borrow
+    public boolean checkMoneyToBorrow(int moneyToBorrow, int facility) {
+        ControllerSchedule controllerSchedule = new ControllerSchedule();
+        if (moneyToBorrow < facility) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

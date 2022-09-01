@@ -62,7 +62,7 @@ public class ControllerUser {
         return userJson;
     }
 
-    public User checkBeneficiary(JSONObject jsonObject) {
+    public User checkBeneficiary(JSONObject jsonObject){
         int currentAccount = Integer.valueOf(jsonObject.get("currentAccount").toString());
         User userBeneficiary = new User();
         userBeneficiary.setCurrentAccount(currentAccount);
@@ -76,7 +76,7 @@ public class ControllerUser {
         return userBeneficiary;
     }
 
-    public boolean checkMoneyOfSender(JSONObject moneyTransactionJson) {
+    public boolean checkMoneyOfSender(JSONObject moneyTransactionJson){
         Transaction transaction = new Transaction();
         int moneyTransfer = Integer.valueOf(moneyTransactionJson.get("moneyTransfer").toString());
         boolean isValid = UserRepository.checkMoneyOfSender(moneyTransfer);
@@ -96,7 +96,7 @@ public class ControllerUser {
         boolean isValid = TransactionRepository.checkCodeVerification(codeCheck, idOfThisTransaction);
     }
 
-    public void transferMoney() {
+    public void transferMoney(){
         User user = User.getUser();
         userView = new UserView();
         userView.transferMoney(user);
@@ -120,11 +120,11 @@ public class ControllerUser {
 
     public static void displayUserView() {
         ControllerUser controllerUser = new ControllerUser();
-
         User user = User.getUser();
         JSONObject jsonObject = new JSONObject();
         jsonObject = controllerUser.convertObjectToJson(user);
-
+        UserView userView = new UserView();
+        userView.display(jsonObject);
     }
 
     public Map<Integer, Integer> selectBeneficiary() {
@@ -137,13 +137,13 @@ public class ControllerUser {
         return map;
     }
 
-    public void logOut() {
+    public void logOut(){
         User.setUser(null);
         MenuView menuView = new MenuView();
         menuView.display();
     }
 
-    public void checkConditionValid(int numSelect, int money, Map<Integer, Integer> map) {
+    public void checkConditionValid(int numSelect, int money, Map<Integer, Integer> map){
         userView = new UserView();
         int beneficiaryCurrentAccount = 0;
         if (numSelect <= map.size()) {
@@ -176,9 +176,17 @@ public class ControllerUser {
                 + senderCurrentAccount + " toi " + transaction.getBeneficiaryCurrentAccount());
     }
 
-    public void onlineBorrowing() {
+    public void onlineBorrowing(){
         User user = User.getUser();
         userView = new UserView();
         userView.onlineBorrowing(user);
+    }
+
+    public boolean checkExpireDateOfSender() {
+        User user = User.getUser();
+        boolean isValid = user.getExpiredDate().isAfter(LocalDateTime.now());
+        return isValid;
+
+
     }
 }

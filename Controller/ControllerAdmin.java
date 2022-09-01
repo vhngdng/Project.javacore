@@ -12,10 +12,11 @@ import Model.UserRepository;
 import View.AdminAccessView;
 
 
+
 public class ControllerAdmin {
     public Admin admin;
     private AdminAccessView adminAccessView;
-    public void LockOrUnlockUser(int num) {
+    public void LockOrUnlockUser(int num){
         if (num == 0) {
             ControllerUser.finishLine();
             System.out.println("không thể thay đổi thông tin của admin");

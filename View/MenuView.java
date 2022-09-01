@@ -25,7 +25,7 @@ public class MenuView {
     }
 
 // Menu start
-    public boolean display() {
+    public boolean display(){
         scanner = new Scanner(System.in);
         boolean isQuit = false;
         while (true) {

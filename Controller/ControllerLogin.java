@@ -1,18 +1,13 @@
 package Controller;
 
 import org.json.JSONObject;
-
-import Model.Admin;
-import Model.CARDTYPE;
 import Model.Person;
 import Model.User;
 import Model.UserRepository;
 import View.AdminAccessView;
+
 import View.LoginView;
 import View.UserView;
-
-
-import util.DateTimeUtil;
 
 public class ControllerLogin {
     private LoginView loginView;
@@ -21,13 +16,13 @@ public class ControllerLogin {
     // private JSONObject userJson;
     //nhận dữ liệu từ view và tạo object
 
-    public boolean loginViewDisplay() {
+    public boolean loginViewDisplay(){
         loginView = new LoginView();
         loginView.display();
         return true;
     }
 
-    public void loginUser(JSONObject userInfo) {
+    public void loginUser(JSONObject userInfo){
         adminAccessView = new AdminAccessView();
         userView = new UserView();
         Person person = new User();

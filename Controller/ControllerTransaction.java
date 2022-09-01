@@ -45,17 +45,17 @@ public class ControllerTransaction {
 
     }
 
-    public void transactionDayList (int num) {
+    public void transactionDayList (int num){
         TransactionRepository.transactionDateShow(num);
         adminAccessView.display();
     }
 
-    public void transactionMonthList (int num) {
+    public void transactionMonthList (int num){
         TransactionRepository.transactionMonthShow(num);
         adminAccessView.display();
     }
 
-    public void transactionYearList (int num) {
+    public void transactionYearList (int num){
         TransactionRepository.transactionYearShow(num);
         adminAccessView.display();
     }

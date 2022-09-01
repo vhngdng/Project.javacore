@@ -8,7 +8,7 @@ public class LoginView {
     public Scanner scanner;
     ControllerLogin controllerLogin;
 
-    public void display() {
+    public void display(){
         controllerLogin = new ControllerLogin();
         scanner = new Scanner(System.in);
         System.out.println("Hay nhap Name va PassWord:");

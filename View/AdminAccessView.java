@@ -38,7 +38,7 @@ public class AdminAccessView {
     }
 
     //show menu admin
-    public void display() {
+    public void display(){
         MenuView menuView = new MenuView();
         boolean isQuit = false;
         scanner = new Scanner(System.in);

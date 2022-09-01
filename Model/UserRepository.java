@@ -9,6 +9,7 @@ import java.util.Random;
 
 import Controller.ControllerLogin;
 import Controller.ControllerUser;
+
 import View.MenuView;
 
 public class UserRepository {
@@ -76,7 +77,7 @@ public class UserRepository {
         return false;
     }
 
-    public static Person checkLoginUser(Person person) {
+    public static Person checkLoginUser(Person person){
         for (Person listPerson : personList) {
             if (listPerson != null
                     && listPerson.getName().equals(person.getName())
