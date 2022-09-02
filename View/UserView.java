@@ -42,7 +42,7 @@ public class UserView {
             int numSelect = 0;
             numSelect = insertNumber(numSelect);
             switch (numSelect) {
-                
+
                 case 1: {
                     controllerUser.showBalanceMoney();
                     break;
@@ -84,7 +84,7 @@ public class UserView {
                     break;
             }
             if (isQuit == true) {
-                menuView.quit();      
+                menuView.quit();
             }
         }
     }
@@ -360,12 +360,12 @@ public class UserView {
         String numberString = scanner.nextLine();
         try {
             number = Integer.parseInt(numberString); // the selection has to be the number
-            
+
         } catch (Exception e) {
             displayWrongDataType();
         }
 
-        
+
         return number;
     }
 }

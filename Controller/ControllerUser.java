@@ -1,6 +1,10 @@
 package Controller;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Scanner;
+
+import Model.*;
 import org.json.JSONObject;
 import Model.CARDTYPE;
 import Model.Transaction;
@@ -103,9 +107,23 @@ public class ControllerUser {
     }
 
     public void phoneRecharging() {
+
+
+
     }
 
-    public void saving() {
+    public SavingAccount saving() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(" mời bạn nhập số tiền gửi ");
+        double savingBalence  = scanner.nextDouble();
+        System.out.println( "chọm kì hạn muốn gửi : 3 , 6, 9 , 12  ");
+        int monthlyDeposit = scanner.nextInt();
+        double savingInterest = SavingAccount.getSavingInterestRate(monthlyDeposit);
+        LocalDate date =LocalDate.now();
+        return new SavingAccount(savingBalence,date,savingInterest,monthlyDeposit);
+
+
+
     }
 
     public void payment() {
