@@ -1,20 +1,20 @@
 package Model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class BorrowingTransaction {
     protected int borrowerCurrentAccount;
-
     protected int money;
     protected LocalDateTime dateTimeTransaction;
-    // Helen: protected boolean isValid;
     protected int id;
 
     public BorrowingTransaction(int borrowerCurrentAccount, int money, LocalDateTime dateTimeTransaction) {
         this.borrowerCurrentAccount = borrowerCurrentAccount;
         this.money = money;
         this.dateTimeTransaction = dateTimeTransaction;
+    }
+
+    public BorrowingTransaction() {
     }
 
     public int getBorrowerCurrentAccount() {
@@ -47,5 +47,12 @@ public class BorrowingTransaction {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        String text = "BorrowingTransaction:\nborrowerCurrentAccount = " + borrowerCurrentAccount + ", dateTimeTransaction = "
+                + dateTimeTransaction.withNano(0) + ", id = " + id + ", money = " + money;
+        return text;
     }
 }

@@ -41,17 +41,18 @@ public class AdminAccessView {
     public void display(){
         MenuView menuView = new MenuView();
         boolean isQuit = false;
+        UserView userView = new UserView();
         scanner = new Scanner(System.in);
         while (true) {
             displaySelection();
-            int num = scanner.nextInt();
-            scanner.nextLine();
+            int num = 0;
+            num = userView.insertNumber(num);
             switch (num) {
                 case 1: {
                     ControllerAdmin controllerAdmin = new ControllerAdmin();
                     System.out.println("Hãy nhập current account/id của user");
-                    int numToLock = scanner.nextInt();
-                    scanner.nextLine();
+                    int numToLock = 0;
+                    numToLock = userView.insertNumber(numToLock);
                     controllerAdmin.LockOrUnlockUser(numToLock);
                     break;
                 }
@@ -61,27 +62,27 @@ public class AdminAccessView {
                 }
                 case 3: {
                     displayTransactionSelection();
-                    int numTrans = scanner.nextInt();
-                    scanner.nextLine();
+                    int numTrans = 0;
+                    numTrans = userView.insertNumber(numTrans);
                     switch (numTrans) {
                         case 1: {
                             System.out.println("hay nhap ngay");
-                            int date = scanner.nextInt();
-                            scanner.nextLine();
+                            int date = 0;
+                            date = userView.insertNumber(date);
                             controllerTransaction.transactionDayList(date);
                             break;
                         }
                         case 2: {
                             System.out.println("hay nhap thang");
-                            int month = scanner.nextInt();
-                            scanner.nextLine();
+                            int month = 0;
+                            month = userView.insertNumber(month);
                             controllerTransaction.transactionMonthList(month);
                             break;
                         }
                         case 3: {
                             System.out.println("hay nhap nam");
-                            int year = scanner.nextInt();
-                            scanner.nextLine();
+                            int year = 0;
+                            year = userView.insertNumber(year);
                             controllerTransaction.transactionYearList(year);
                             break;
                         }
@@ -106,7 +107,7 @@ public class AdminAccessView {
                 }
                 case 6: {
                     isQuit = true;
-                    break;
+                    return;
                 }
                 default:
                     break;

@@ -1,9 +1,7 @@
 package View;
 
 import java.util.Scanner;
-
 import Controller.ControllerLogin;
-
 
 public class MenuView {
     private Scanner scanner;
@@ -25,18 +23,14 @@ public class MenuView {
     }
 
 // Menu start
-    public boolean display(){
+    public void display(){
         scanner = new Scanner(System.in);
         boolean isQuit = false;
         while (true) {
             displaySelection();
             int numSelect = 0;
-            try {
-            numSelect = scanner.nextInt();
-            scanner.nextLine();
-            }catch(Exception e) {
-                return true;
-            }
+            UserView userView = new UserView();
+            numSelect = userView.insertNumber(numSelect);
             switch (numSelect) {
                 case 1: {
                     ControllerLogin controllerLogin = new ControllerLogin();
@@ -63,19 +57,14 @@ public class MenuView {
         if (isQuit == true) {
             this.quit();
         }
-        return true;
     }
 
     /**
      * system quit
      */
     public void quit() {
-        adminAccessView = new AdminAccessView();
-        userView = new UserView();
         System.out.println("Hen gap lai !!!");
-        adminAccessView.close();
-        userView.close();      
-        this.close();
+        System.exit(1);
     }
 
     // close view

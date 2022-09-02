@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import Model.BorrowingTransaction;
+import Model.TransactionRepository;
 import Model.User;
 import View.UserView;
 
 public class ControllerSchedule {
-    private Scanner scanner;
 
     public static void scheduleOfPayment(double yearlyInterestRate, int termOfBorrowing, int moneyToBorrow) {
         double monthlyInterestRate = yearlyInterestRate / 12; // Monthly interest rate
@@ -57,7 +57,7 @@ public class ControllerSchedule {
             UserView userView = new UserView();
             userView.scheduleOfPayment();
             ControllerSchedule.scheduleOfPayment(yearlyInterestRate, termOfBorrowing,
-                    moneyToBorrow); // static???
+                    moneyToBorrow);
             userView.termAndCondition(moneyToBorrow);
 
         }else {
@@ -68,12 +68,18 @@ public class ControllerSchedule {
 
     // check money to borrow
     public boolean checkMoneyToBorrow(int moneyToBorrow, int facility) {
-        ControllerSchedule controllerSchedule = new ControllerSchedule();
         if (moneyToBorrow < facility) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static void showResultBorrowingTransaction(int id, int currentAccount) {
+        TransactionRepository transactionRepository = new TransactionRepository();
+        BorrowingTransaction borrowingTransaction = transactionRepository.getBorrowingTransById(id);
+        System.out.println(borrowingTransaction.toString());
+
     }
 
 }

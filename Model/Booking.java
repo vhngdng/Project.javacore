@@ -32,7 +32,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking\naddress = " + address + ", date = " + date + ", name = " + name + ", phoneNumber = "
+        return "Booking\naddress = " + address + ", date = " + date.withNano(0) + ", name = " + name + ", phoneNumber = "
                 + phoneNumber + ", email = " + email;
     }
 }

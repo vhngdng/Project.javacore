@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Booking;
 import View.BookingView;
+import View.UserView;
 
 public class ControllerBooking {
     public static void chooseAddress(int numSelect) {
@@ -22,10 +23,6 @@ public class ControllerBooking {
     public static void showDaNangAddressBranch() {
         BookingView bookingView = new BookingView();
         bookingView.displayDaNangBranch();
-
-    }
-
-    public static void addAddress(int num) {
 
     }
 

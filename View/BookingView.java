@@ -26,6 +26,8 @@ public class BookingView {
     public boolean display() {
         boolean isValid = false;
         String address = null;
+        int num = 0;
+        UserView userView = new UserView();
         scanner = new Scanner(System.in);
         displaySelection();
         System.out.println("Nhập tên");
@@ -33,20 +35,20 @@ public class BookingView {
         System.out.println("Nhập email");
         String email = scanner.nextLine();
         System.out.println("Nhập số điện thoại");
-        int phoneNumber = scanner.nextInt();
-        scanner.nextLine();
+        int phoneNumber = 0;
+        phoneNumber = userView.insertNumber(phoneNumber);
         System.out.println("Chọn ngày hẹn: (dd-MM-yyyy-HH:mm)");
         String dateTime = scanner.nextLine();
         LocalDateTime date = DateTimeUtil.convertStringToLocalDate(dateTime);
         displayCity();
-        int numSelect = scanner.nextInt();
+        int numSelect = 0;
+        numSelect = userView.insertNumber(numSelect);
         while (true) {
             switch (numSelect) {
                 case 1: {
                     ControllerBooking.showHaNoiAddressBranch();
                     System.out.println("Chọn chi nhánh");
-                    int num = scanner.nextInt();
-                    scanner.nextLine();
+                    num = userView.insertNumber(num);
                     address = ControllerBooking.addHaNoiBranch(num);
                     isValid = true;
                     break;
@@ -54,8 +56,7 @@ public class BookingView {
                 case 2: {
                     ControllerBooking.showHoChiMinhAddressBranch();
                     System.out.println("Chọn chi nhánh");
-                    int num = scanner.nextInt();
-                    scanner.nextLine();
+                    num = userView.insertNumber(num);
                     address = ControllerBooking.addHoChiMinhBranch(num);
                     isValid = true;
                     break;
@@ -63,8 +64,7 @@ public class BookingView {
                 case 3: {
                     ControllerBooking.showDaNangAddressBranch();
                     System.out.println("Chọn chi nhánh");
-                    int num = scanner.nextInt();
-                    scanner.nextLine();
+                    num = userView.insertNumber(num);
                     address = ControllerBooking.addDaNangBranch(num);
                     isValid = true;
                     break;
@@ -76,10 +76,8 @@ public class BookingView {
                 break;
             }
         }
-
         Booking booking = new Booking(name, address, email, phoneNumber, date);
         ControllerBooking.registerBooking(booking);
-
         return false;
     }
 

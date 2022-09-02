@@ -25,6 +25,7 @@ public class ControllerLogin {
     public void loginUser(JSONObject userInfo){
         adminAccessView = new AdminAccessView();
         userView = new UserView();
+        loginView = new LoginView();
         Person person = new User();
         String name = userInfo.get("name").toString();
         String password = userInfo.get("password").toString();
