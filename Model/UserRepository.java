@@ -9,6 +9,7 @@ import java.util.Random;
 
 import Controller.ControllerLogin;
 import Controller.ControllerUser;
+
 import View.MenuView;
 
 public class UserRepository {
@@ -76,7 +77,7 @@ public class UserRepository {
         return false;
     }
 
-    public static Person checkLoginUser(Person person) {
+    public static Person checkLoginUser(Person person){
         for (Person listPerson : personList) {
             if (listPerson != null
                     && listPerson.getName().equals(person.getName())
@@ -167,12 +168,12 @@ public class UserRepository {
 
     // chuyen tien
     public static int transferMoney(Transaction transaction) {
-
+        ControllerUser controllerUser = new ControllerUser();
         User benefiUser = getUserWithCurrentAccount(transaction.getBeneficiaryCurrentAccount());
         User sendUser = getUserWithCurrentAccount(transaction.getSenderCurrentAccount());
         if (benefiUser == sendUser) {
             System.out.println("Người nhận không phù hợp");
-            ControllerUser.displayUserView();
+            controllerUser.displayUserView();
         }
         int money = transaction.getMoney();
         benefiUser.setBalance(benefiUser.getBalance() + money);
@@ -187,14 +188,23 @@ public class UserRepository {
         return sendUser.getBalance();
     }
 
+    // check ID or current account de tim user roi set user lock or unlock
     public static boolean checkIdOrCurrentAccount(int num) {
         boolean isValid = false;
         for (Person personL : personList) {
-            if (num == personL.getCurrentAccount() || num == personL.getId()) {
+            if ((num == personL.getCurrentAccount() || num == personL.getId() )&& personL.isLocked() == false) {
 
                 personL.setLocked(true);
                 System.out.println("Tai khoan cua " + personL.getName() + ", số tk: " + personL.getCurrentAccount()
                         + " đã bị khóa");
+                isValid = true;
+                break;
+            }
+
+            if ((num == personL.getCurrentAccount() || num == personL.getId() )&& personL.isLocked() == true) {
+                personL.setLocked(false);
+                System.out.println("Tai khoan cua " + personL.getName() + ", số tk: " + personL.getCurrentAccount()
+                        + " đã mở khóa");
                 isValid = true;
                 break;
             }
@@ -238,6 +248,19 @@ public class UserRepository {
             }
         }
         return name;
+    }
+
+    // online borrowing
+    public static int onlineBorrowing(BorrowingTransaction borrowingTransaction, User borrowingUser) {
+        int money = borrowingTransaction.getMoney();
+        borrowingUser.setBalance(borrowingUser.getBalance() + money);
+        // Helen: transaction.setValid(true); not use this
+        // add transaction in user
+        TransactionRepository.addBorrowingTransaction(borrowingTransaction);
+        int id = borrowingTransaction.getId();
+        // Helen: ControllerUser.showResultTransactionBeneficiary(id, transaction.getSenderCurrentAccount());
+        System.out.println("Số dư hiện tại của bạn :" + borrowingUser.getBalance());
+        return borrowingUser.getBalance();
     }
 
 }

@@ -1,20 +1,14 @@
 package View;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
-
 import Controller.ControllerAdmin;
 import Controller.ControllerBooking;
 import Controller.ControllerTransaction;
 import Controller.ControllerUser;
-import Model.Admin;
-import util.DateTimeUtil;
 
 public class AdminAccessView {
-    private static Admin admin;
-    private static Scanner scanner;
-    private MenuView menuView;
-
+    private Scanner scanner;
+    private ControllerTransaction controllerTransaction;
     public AdminAccessView() {
 
     }
@@ -43,7 +37,8 @@ public class AdminAccessView {
         System.out.println("[5] Back to previous page");
     }
 
-    public static void display() {
+    //show menu admin
+    public void display(){
         MenuView menuView = new MenuView();
         boolean isQuit = false;
         scanner = new Scanner(System.in);
@@ -53,11 +48,11 @@ public class AdminAccessView {
             scanner.nextLine();
             switch (num) {
                 case 1: {
+                    ControllerAdmin controllerAdmin = new ControllerAdmin();
                     System.out.println("Hãy nhập current account/id của user");
                     int numToLock = scanner.nextInt();
                     scanner.nextLine();
-                    ControllerAdmin.LockOrUnlockUser(numToLock);
-                    
+                    controllerAdmin.LockOrUnlockUser(numToLock);
                     break;
                 }
                 case 2: {
@@ -73,21 +68,21 @@ public class AdminAccessView {
                             System.out.println("hay nhap ngay");
                             int date = scanner.nextInt();
                             scanner.nextLine();
-                            ControllerTransaction.transactionDayList(date);
+                            controllerTransaction.transactionDayList(date);
                             break;
                         }
                         case 2: {
                             System.out.println("hay nhap thang");
                             int month = scanner.nextInt();
                             scanner.nextLine();
-                            ControllerTransaction.transactionMonthList(month);
+                            controllerTransaction.transactionMonthList(month);
                             break;
                         }
                         case 3: {
                             System.out.println("hay nhap nam");
                             int year = scanner.nextInt();
                             scanner.nextLine();
-                            ControllerTransaction.transactionYearList(year);
+                            controllerTransaction.transactionYearList(year);
                             break;
                         }
                         case 4: {  
@@ -118,11 +113,19 @@ public class AdminAccessView {
                 
             }
         
-            if(isQuit == true) {
+            if (isQuit == true) {
+                menuView.close();
                 break;
             }
         }
     }
 
+
+    //close view
+    public void close() {
+        if (this.scanner != null) {
+            this.scanner.close();
+        }
+    }
 
 }

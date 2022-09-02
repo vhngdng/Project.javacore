@@ -10,6 +10,9 @@ public class Person {
     public boolean isLocked() {
         return isLocked;
     }
+    public boolean getLocked() {
+        return this.isLocked;
+    }
 
     public void setLocked(boolean isLocked) {
         this.isLocked = isLocked;

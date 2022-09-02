@@ -1,22 +1,22 @@
 package View;
 
-import java.time.LocalDate;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.chrono.IsoEra;
 import java.util.Map;
 import java.util.Scanner;
-
+import Controller.ControllerSchedule;
 import org.json.JSONObject;
-
-
 import Controller.ControllerTransaction;
 import Controller.ControllerUser;
 import Model.User;
 import util.DateTimeUtil;
 
 public class UserView {
-    private static Scanner scanner;
-    private static ControllerUser controllerUser = new ControllerUser();
-    private static ControllerTransaction controllerTransaction = new ControllerTransaction();
+    private Scanner scanner = new Scanner(System.in);
+    private static ControllerUser controllerUser;
+    private static ControllerTransaction controllerTransaction;
+
     public static void displaySelection() {
         System.out.println("==========VCB Digibank==========");
         System.out.println("============Welcome=============");
@@ -31,14 +31,21 @@ public class UserView {
         System.out.println("[9] Thoát");
     }
 
-    public static void display(JSONObject userJson) {
-        // User user = controllerUser.convertJsonToUser(user2);
-
+    public void display(JSONObject userJson) {
+        controllerUser = new ControllerUser();
+        controllerTransaction = new ControllerTransaction();
+        MenuView menuView = new MenuView();
         boolean isQuit = false;
         while (true) {
             scanner = new Scanner(System.in);
             displaySelection();
-            int numSelect = scanner.nextInt();
+            int numSelect = 0;
+            try {
+                numSelect = scanner.nextInt();
+                scanner.nextLine();
+            } catch (Exception e) {
+                return;
+            }
             switch (numSelect) {
                 case 1: {
                     controllerUser.showBalanceMoney();
@@ -61,7 +68,7 @@ public class UserView {
                     break;
                 }
                 case 6: {
-                    controllerUser.loan();
+                    controllerUser.onlineBorrowing();
                     break;
                 }
                 case 7: {
@@ -71,13 +78,12 @@ public class UserView {
                     controllerUser.logOut();
                     break;
                 }
-                
+
                 default:
                     break;
             }
-
             if (isQuit == true) {
-                break;
+                menuView.quit();
             }
         }
         if (isQuit == true) {
@@ -98,8 +104,14 @@ public class UserView {
         }
     }
 
-    // chuyen tien
+    // chuyen tien menu
     public void transferMoney(User user) {
+        // check expireDate
+        boolean isValid = controllerUser.checkExpireDateOfSender();
+        if (isValid == false) {
+            System.out.println("Your card is expired\nPlease call our hotline and contact us for the details");
+            ControllerUser.displayUserView();
+        }
         ControllerUser controllerUser = new ControllerUser();
         System.out.println("test");
         System.out.println("User balance: " + user.getBalance());
@@ -116,6 +128,7 @@ public class UserView {
                 int beneficiaryCurrentAccount = scanner.nextInt();
                 JSONObject beneficiaryCurrentAccountJson = new JSONObject();
                 beneficiaryCurrentAccountJson.put("currentAccount", beneficiaryCurrentAccount);
+
                 // check beneficiary
                 User userBeneficiary = controllerUser.checkBeneficiary(beneficiaryCurrentAccountJson);
                 if (userBeneficiary != null) {
@@ -126,18 +139,20 @@ public class UserView {
 
                     JSONObject moneyTransactionJson = new JSONObject();
                     moneyTransactionJson.put("moneyTransfer", money);
+
                     // check money
                     controllerUser.checkMoneyOfSender(moneyTransactionJson);
 
+
                     moneyTransactionJson.put("beneficiaryCurrentAccount",
                             String.valueOf(userBeneficiary.getCurrentAccount()));
+
                     // Date Time Transaction
                     String dateTimeSendingTransaction = DateTimeUtil.convertLocalDateToString(LocalDateTime.now());
                     moneyTransactionJson.put("dateTimeSendingTransaction", dateTimeSendingTransaction);
                     moneyTransactionJson.put("senderCurrentAccount", String.valueOf(user.getCurrentAccount()));
 
                     ControllerTransaction.transferMoney(moneyTransactionJson);
-                    
 
                 } else {
                     ControllerUser.displayUserView();
@@ -164,6 +179,6 @@ public class UserView {
         System.out.println("Amount: ");
         int money = scanner.nextInt();
         ControllerUser.checkConditionValid(numSelect, money);
-       
+
     }
 }

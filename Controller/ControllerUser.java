@@ -1,21 +1,22 @@
 package Controller;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import Model.*;
 import org.json.JSONObject;
-
+import Model.CARDTYPE;
+import Model.Transaction;
+import Model.TransactionRepository;
+import Model.User;
+import Model.UserRepository;
 import View.MenuView;
 import View.UserView;
 import util.DateTimeUtil;
 
 public class ControllerUser {
     private JSONObject userJson;
-    // private UserView userView;
+    private UserView userView;
     private ControllerUser controllerUser;
 
     // convert user to file json
@@ -64,7 +65,7 @@ public class ControllerUser {
         return userJson;
     }
 
-    public User checkBeneficiary(JSONObject jsonObject) {
+    public User checkBeneficiary(JSONObject jsonObject){
         int currentAccount = Integer.valueOf(jsonObject.get("currentAccount").toString());
         User userBeneficiary = new User();
         userBeneficiary.setCurrentAccount(currentAccount);
@@ -73,18 +74,18 @@ public class ControllerUser {
 
         if (userBeneficiary == null) {
 
-            UserView.display(userJson);
+            userView.display(userJson);
         }
         return userBeneficiary;
     }
 
-    public boolean checkMoneyOfSender(JSONObject moneyTransactionJson) {
+    public boolean checkMoneyOfSender(JSONObject moneyTransactionJson){
         Transaction transaction = new Transaction();
         int moneyTransfer = Integer.valueOf(moneyTransactionJson.get("moneyTransfer").toString());
         boolean isValid = UserRepository.checkMoneyOfSender(moneyTransfer);
         if (isValid == false) {
             ControllerUser controllerUser = new ControllerUser();
-            UserView.display(controllerUser.getUserLoginJson());
+            userView.display(controllerUser.getUserLoginJson());
         } else {
 
             isValid = true;
@@ -98,9 +99,9 @@ public class ControllerUser {
         boolean isValid = TransactionRepository.checkCodeVerification(codeCheck, idOfThisTransaction);
     }
 
-    public void transferMoney() {
+    public void transferMoney(){
         User user = User.getUser();
-        UserView userView = new UserView();
+        userView = new UserView();
         userView.transferMoney(user);
     }
 
@@ -133,11 +134,11 @@ public class ControllerUser {
 
     public static void displayUserView() {
         ControllerUser controllerUser = new ControllerUser();
-
         User user = User.getUser();
         JSONObject jsonObject = new JSONObject();
         jsonObject = controllerUser.convertObjectToJson(user);
-        UserView.display(jsonObject);
+        UserView userView = new UserView();
+        userView.display(jsonObject);
     }
 
     public Map<Integer, Integer> selectBeneficiary() {
@@ -150,20 +151,21 @@ public class ControllerUser {
         return map;
     }
 
-    public void logOut() {
+    public void logOut(){
         User.setUser(null);
         MenuView menuView = new MenuView();
         menuView.display();
     }
 
-    public static void checkConditionValid(int numSelect, int money, Map<Integer, Integer> map) {
+    public void checkConditionValid(int numSelect, int money, Map<Integer, Integer> map){
+        userView = new UserView();
         int beneficiaryCurrentAccount = 0;
         if (numSelect <= map.size()) {
             System.out.println("Beneficiary User is valid");
             beneficiaryCurrentAccount = map.get(numSelect);
         } else {
             System.out.println("Beneficiary User is not valid");
-//            UserView.transferProcess(map);
+            userView.transferProcess(map);
         }
 
         if (UserRepository.checkMoneyOfSender(money) == true) {
@@ -171,7 +173,7 @@ public class ControllerUser {
                     money, LocalDateTime.now());
             UserRepository.transferMoney(transaction);
             ControllerUser controllerUser = new ControllerUser();
-            UserView.display(controllerUser.convertObjectToJson(User.getUser()));
+            userView.display(controllerUser.convertObjectToJson(User.getUser()));
         }
         System.out.println(User.getUser().getBalance());
     }
@@ -188,4 +190,17 @@ public class ControllerUser {
                 + senderCurrentAccount + " toi " + transaction.getBeneficiaryCurrentAccount());
     }
 
+    public void onlineBorrowing(){
+        User user = User.getUser();
+        userView = new UserView();
+        userView.onlineBorrowing(user);
+    }
+
+    public boolean checkExpireDateOfSender() {
+        User user = User.getUser();
+        boolean isValid = user.getExpiredDate().isAfter(LocalDateTime.now());
+        return isValid;
+
+
+    }
 }
