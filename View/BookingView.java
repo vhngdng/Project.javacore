@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 import Controller.ControllerBooking;
 import Model.Booking;
+import Model.User;
 import util.DateTimeUtil;
 
 public class BookingView {
@@ -31,19 +32,51 @@ public class BookingView {
         scanner = new Scanner(System.in);
         displaySelection();
         System.out.println("Nhập tên");
-        String name  = scanner.nextLine();
+        String name = scanner.nextLine();
         System.out.println("Nhập email");
-        String email = scanner.nextLine();
+        String email = "";
+        while (true) {
+            email = scanner.nextLine();
+            if (User.emailRegex(email) == true) {
+                break;
+            }else{
+                System.out.println("email không phù hợp, hãy nhập lại");
+            }
+        }
         System.out.println("Nhập số điện thoại");
         int phoneNumber = 0;
-        phoneNumber = userView.insertNumber(phoneNumber);
+        while (true) {
+            String phoneNumberString = scanner.nextLine();
+            try {
+                phoneNumber = Integer.valueOf(phoneNumberString);
+            } catch (Exception e) {
+                System.out.println("Số điện thoại không đúng");
+            }
+            if (User.phoneNumberRegex(phoneNumberString) == true) {
+                break;
+            }
+
+        }
         System.out.println("Chọn ngày hẹn: (dd-MM-yyyy-HH:mm)");
-        String dateTime = scanner.nextLine();
-        LocalDateTime date = DateTimeUtil.convertStringToLocalDate(dateTime);
+        System.out.println("Chọn khung giờ trước 18:00");
+        LocalDateTime date = LocalDateTime.now();
+        while (true) {
+            String dateTime = scanner.nextLine();
+            try {
+                date = DateTimeUtil.convertStringToLocalDate(dateTime);
+            } catch (Exception e) {
+                System.out.println("Ngày hẹn không phù hợp, xin hãy nhập lại: ");
+            }
+            if (date.isAfter(LocalDateTime.now()) == true && date.getHour() < 18) {
+                break;
+            } else {
+                System.out.println("Thời gian không phù hợp, hãy nhập lại");
+            }
+        }
         displayCity();
         int numSelect = 0;
-        numSelect = userView.insertNumber(numSelect);
         while (true) {
+            numSelect = userView.insertNumber(numSelect);
             switch (numSelect) {
                 case 1: {
                     ControllerBooking.showHaNoiAddressBranch();
@@ -103,6 +136,5 @@ public class BookingView {
         System.out.println("[3] Quận Hòa Vang");
         System.out.println("[4] Quận Liên Chiều");
     }
-
 
 }

@@ -81,7 +81,7 @@ public class ControllerTransaction {
 
 
     public static int moneyDisbursement(BorrowingTransaction borrowingTransaction, User borrowingUser) {
-        TransactionRepository.addBorrowingTransaction(borrowingTransaction);
+       
 
         // online borrowing
         return UserRepository.onlineBorrowing(borrowingTransaction, borrowingUser);

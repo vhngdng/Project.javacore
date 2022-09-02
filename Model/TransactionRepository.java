@@ -87,8 +87,8 @@ public class TransactionRepository {
     public static int addBorrowingTransaction(BorrowingTransaction borrowingTransaction) {
         // Helen: if (transaction.isValid() == true)
         borrowingTransactionCount += 1;
-        borrowingTransaction.setId(id);
-        id++;
+        borrowingTransaction.setId(borrowingTransactionCount);
+        
         listBorrowingTransaction.add(borrowingTransaction);
         return borrowingTransactionCount;
     }

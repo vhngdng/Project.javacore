@@ -2,8 +2,6 @@ package Controller;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Scanner;
-
 import Model.BorrowingTransaction;
 import Model.TransactionRepository;
 import Model.User;
