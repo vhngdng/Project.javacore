@@ -79,9 +79,6 @@ public class ControllerTransaction {
         System.out.println(TransactionRepository.getTransactionList().toString());
     }
 
-    public void showTransactionDetail() {
-
-    }
 
     public static int moneyDisbursement(BorrowingTransaction borrowingTransaction, User borrowingUser) {
         TransactionRepository.addBorrowingTransaction(borrowingTransaction);

@@ -47,7 +47,6 @@ public class UserView {
                 }
                 case 2: {
                     controllerUser.transferMoney();
-                    controllerTransaction.showTransactionDetail();
                     break;
                 }
                 case 3: {
