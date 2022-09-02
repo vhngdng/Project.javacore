@@ -68,30 +68,35 @@ public class SavingAccount {
             if (user.getBalance() >= getSavingBalence()) {
                 Transaction transaction = new Transaction();
                 ControllerUser controllerUser = new ControllerUser();
-                System.out.println(" số tiền gửi  là   " + getSavingBalence());
-                System.out.println(" số tháng gửi là " + getMonthlyDeposit());
-                System.out.println(" với mức lãi xuất là " + getSavingInterest());
-                System.out.println(" ngày gửi " + getSentDate());
-                System.out.println(" tổng số tiền lãi " + getSavingBalence() * getSavingInterest() / 100);
-                System.out.println(" bạn có đồng : ");
-                System.out.println(" [1]   đồng ý \n [2]   từ chối  ");
+                System.out.println(" Số tiền gửi  là :" + getSavingBalence()+"VND");
+                System.out.println(" Số tháng gửi là :" + getMonthlyDeposit());
+                System.out.println(" Lãi Xuất :" + getSavingInterest());
+                System.out.println(" Ngày gửi :" + getSentDate());
+                System.out.println(" Tổng số tiền lãi :" + getSavingBalence() * getSavingInterest() / 100+"VND");
+                System.out.println(" Bạn có đồng : ");
+                System.out.println(" [1]   Đồng ý \n [2]   Từ chối  ");
+
                 int moinhap = scanner.nextInt();
+
                 if (moinhap == 1) {
                     System.out.println(" bạn đã gửi tiết kiệm thành công");
                     user.setBalance((int) (user.getBalance() - getSavingBalence()));
-                    System.out.println(" số dư còn lại là  : " + user.getBalance());
+                    System.out.println(" số dư còn lại là  : " + user.getBalance()+"VND");
                     curn = false;
-                } else {
+                }
+             else  {
                     System.out.println("bạn đã từ chối gửi tiết kiệm");
                 }
             } else {
                 System.out.println("số tiền gửi không thể lớn hơn số dư tài khoản ");
                 System.out.println(" mời bạn nhập lại số tiền ");
                 savingBalence = scanner.nextDouble();
-
             }
 
         }
+
+
+
 
 
 //        JSONObject moneyTransactionJson = new JSONObject();
@@ -105,6 +110,8 @@ public class SavingAccount {
 
 
     }
+
+
 
 
 }
