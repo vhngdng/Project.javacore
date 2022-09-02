@@ -1,9 +1,7 @@
 package View;
 
 import java.util.Scanner;
-
 import Controller.ControllerLogin;
-
 
 public class MenuView {
     private Scanner scanner;
@@ -31,12 +29,8 @@ public class MenuView {
         while (true) {
             displaySelection();
             int numSelect = 0;
-            try {
-            numSelect = scanner.nextInt();
-            scanner.nextLine();
-            }catch(Exception e) {
-                return true;
-            }
+            UserView userView = new UserView();
+            numSelect = userView.insertNumber(numSelect);
             switch (numSelect) {
                 case 1: {
                     ControllerLogin controllerLogin = new ControllerLogin();

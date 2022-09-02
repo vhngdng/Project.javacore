@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import Controller.ControllerLogin;
+import Controller.ControllerSchedule;
 import Controller.ControllerUser;
 
 import View.MenuView;
@@ -158,13 +157,6 @@ public class UserRepository {
         return user;
     }
 
-    public static boolean isValid(Transaction transactionSending) {
-        return false;
-    }
-
-    public static User findUserWithId(int id) {
-        return null;
-    }
 
     // chuyen tien
     public static int transferMoney(Transaction transaction) {
@@ -173,7 +165,7 @@ public class UserRepository {
         User sendUser = getUserWithCurrentAccount(transaction.getSenderCurrentAccount());
         if (benefiUser == sendUser) {
             System.out.println("Người nhận không phù hợp");
-            controllerUser.displayUserView();
+            ControllerUser.displayUserView();
         }
         int money = transaction.getMoney();
         benefiUser.setBalance(benefiUser.getBalance() + money);
@@ -254,11 +246,12 @@ public class UserRepository {
     public static int onlineBorrowing(BorrowingTransaction borrowingTransaction, User borrowingUser) {
         int money = borrowingTransaction.getMoney();
         borrowingUser.setBalance(borrowingUser.getBalance() + money);
-        // Helen: transaction.setValid(true); not use this
         // add transaction in user
         TransactionRepository.addBorrowingTransaction(borrowingTransaction);
         int id = borrowingTransaction.getId();
-        // Helen: ControllerUser.showResultTransactionBeneficiary(id, transaction.getSenderCurrentAccount());
+
+        // đoạn này cần hoàn thiện
+        ControllerSchedule.showResultBorrowingTransaction(id, borrowingUser.getCurrentAccount());
         System.out.println("Số dư hiện tại của bạn :" + borrowingUser.getBalance());
         return borrowingUser.getBalance();
     }

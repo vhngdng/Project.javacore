@@ -3,7 +3,6 @@ package View;
 import java.util.Scanner;
 import org.json.JSONObject;
 import Controller.ControllerLogin;
-
 public class LoginView {
     public Scanner scanner;
     ControllerLogin controllerLogin;
@@ -17,8 +16,9 @@ public class LoginView {
         System.out.println("Your Password: ");
         String password = scanner.nextLine();
         System.out.println("Your current account: ");
-        int currentAccount = scanner.nextInt();
-        scanner.nextLine();
+        int currentAccount = 0;
+        UserView userView = new UserView();
+        currentAccount = userView.insertNumber(currentAccount);
     //đổi dữ liệu qua file JSON
         JSONObject UserInfo = new JSONObject();
         UserInfo.put("name", name);

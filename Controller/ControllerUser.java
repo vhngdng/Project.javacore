@@ -110,9 +110,7 @@ public class ControllerUser {
 
     public void payment() {
     }
-
-    public void loan() {
-    }
+ 
 
     public static void finishLine() {
         System.out.println("=========================================================================================");
@@ -158,8 +156,7 @@ public class ControllerUser {
             Transaction transaction = new Transaction(User.getUser().getCurrentAccount(), beneficiaryCurrentAccount,
                     money, LocalDateTime.now());
             UserRepository.transferMoney(transaction);
-            ControllerUser controllerUser = new ControllerUser();
-            userView.display(controllerUser.convertObjectToJson(User.getUser()));
+            ControllerUser.displayUserView();
         }
         System.out.println(User.getUser().getBalance());
     }

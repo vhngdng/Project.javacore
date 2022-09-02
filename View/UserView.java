@@ -1,8 +1,7 @@
 package View;
 
-import java.time.Duration;
+
 import java.time.LocalDateTime;
-import java.time.chrono.IsoEra;
 import java.util.Map;
 import java.util.Scanner;
 import Controller.ControllerSchedule;
@@ -40,12 +39,7 @@ public class UserView {
             scanner = new Scanner(System.in);
             displaySelection();
             int numSelect = 0;
-            try {
-                numSelect = scanner.nextInt();
-                scanner.nextLine();
-            } catch (Exception e) {
-                return;
-            }
+            numSelect = insertNumber(numSelect);
             switch (numSelect) {
                 case 1: {
                     controllerUser.showBalanceMoney();
@@ -117,51 +111,55 @@ public class UserView {
         System.out.println("[1] Enter beneficiary account");
         System.out.println("[2] Select beneficiary account");
         System.out.println("[3] Back to your account");
-        int number = scanner.nextInt();
-        switch (number) {
-            case 1: {
-                System.out.println("Beneficiary account: ");
-                int beneficiaryCurrentAccount = scanner.nextInt();
-                JSONObject beneficiaryCurrentAccountJson = new JSONObject();
-                beneficiaryCurrentAccountJson.put("currentAccount", beneficiaryCurrentAccount);
+        int number = 0;
+        while (true) {
+            number = insertNumber(number);
+            switch (number) {
+                case 1: {
+                    System.out.println("Beneficiary account: ");
+                    int beneficiaryCurrentAccount = 0;
+                    beneficiaryCurrentAccount = insertNumber(beneficiaryCurrentAccount);
+                    JSONObject beneficiaryCurrentAccountJson = new JSONObject();
+                    beneficiaryCurrentAccountJson.put("currentAccount", beneficiaryCurrentAccount);
 
-                // check beneficiary
-                User userBeneficiary = controllerUser.checkBeneficiary(beneficiaryCurrentAccountJson);
-                if (userBeneficiary != null) {
-                    System.out.println("Amount: ");
-                    int moneyTrans = scanner.nextInt();
-                    scanner.nextLine();
-                    String money = String.valueOf(moneyTrans);
+                    // check beneficiary
+                    User userBeneficiary = controllerUser.checkBeneficiary(beneficiaryCurrentAccountJson);
+                    if (userBeneficiary != null) {
+                        System.out.println("Amount: ");
+                        int moneyTrans = 0;
+                        moneyTrans = insertNumber(moneyTrans);
+                        String money = String.valueOf(moneyTrans);
 
-                    JSONObject moneyTransactionJson = new JSONObject();
-                    moneyTransactionJson.put("moneyTransfer", money);
+                        JSONObject moneyTransactionJson = new JSONObject();
+                        moneyTransactionJson.put("moneyTransfer", money);
 
-                    // check money
-                    controllerUser.checkMoneyOfSender(moneyTransactionJson);
-                    
+                        // check money
+                        controllerUser.checkMoneyOfSender(moneyTransactionJson);
 
-                    moneyTransactionJson.put("beneficiaryCurrentAccount",
-                            String.valueOf(userBeneficiary.getCurrentAccount()));
+                        moneyTransactionJson.put("beneficiaryCurrentAccount",
+                                String.valueOf(userBeneficiary.getCurrentAccount()));
 
-                    // Date Time Transaction
-                    String dateTimeSendingTransaction = DateTimeUtil.convertLocalDateToString(LocalDateTime.now());
-                    moneyTransactionJson.put("dateTimeSendingTransaction", dateTimeSendingTransaction);
-                    moneyTransactionJson.put("senderCurrentAccount", String.valueOf(user.getCurrentAccount()));
-
-                    ControllerTransaction.transferMoney(moneyTransactionJson);
-
-                } else {
-                    ControllerUser.displayUserView();
+                        // Date Time Transaction
+                        String dateTimeSendingTransaction = DateTimeUtil.convertLocalDateToString(LocalDateTime.now());
+                        moneyTransactionJson.put("dateTimeSendingTransaction", dateTimeSendingTransaction);
+                        moneyTransactionJson.put("senderCurrentAccount", String.valueOf(user.getCurrentAccount()));
+                        ControllerTransaction.transferMoney(moneyTransactionJson);
+                    } else {
+                        ControllerUser.displayUserView();
+                    }
+                    break;
                 }
-                break;
-            }
-            case 2: {
-                Map<Integer, Integer> map = controllerUser.selectBeneficiary();
-                transferProcess(map);
-            }
-            case 3: {
-                display(controllerUser.getUserLoginJson());
-                break;
+                case 2: {
+                    Map<Integer, Integer> map = controllerUser.selectBeneficiary();
+                    transferProcess(map);
+                }
+                case 3: {
+                    display(controllerUser.getUserLoginJson());
+                    break;
+                }
+                default:
+                    displayWrongSelection();
+                    break;
             }
 
         }
@@ -169,11 +167,12 @@ public class UserView {
     }
 
     public void transferProcess(Map<Integer, Integer> map) {
-        System.out.println("Select the beneficiary: ");
-        int numSelect = scanner.nextInt();
-        scanner.nextLine();
+        int numSelect = 0;
+        int money = 0;
+        System.out.println("Select the beneficiary");
+        numSelect = insertNumber(numSelect);
         System.out.println("Amount: ");
-        int money = scanner.nextInt();
+        money = insertNumber(money);
         controllerUser.checkConditionValid(numSelect, money, map);
     }
 
@@ -189,13 +188,7 @@ public class UserView {
         System.out.println("[2] Loan for real estate/car purchase or business/manufacturing purpose");
         System.out.println("[3] Return to the main");
         while (true) {
-            String numberString = scanner.nextLine();
-            try {
-                number = Integer.parseInt(numberString);
-            } catch (Exception e) {
-                displayWrongDataType();
-
-            }
+            number = insertNumber(number);
             switch (number) {
                 case 1: {
                     consumerLoanProcess(user);
@@ -212,7 +205,7 @@ public class UserView {
                     break;
                 }
                 default:
-                    System.out.println("Wrong selection");
+                    displayWrongSelection();
                     break;
             }
             if (isValid == true) {
@@ -226,8 +219,8 @@ public class UserView {
         // check amount to borrow
         int facility = (int) (0.75 * user.getBalance());
         System.out.println("Amount to borrow: ");
-        int moneyToBorrow = scanner.nextInt();
-        scanner.nextLine();
+        int moneyToBorrow = 0;
+        moneyToBorrow = insertNumber(moneyToBorrow);
         ControllerSchedule controllerSchedule = new ControllerSchedule();
         boolean isMoneyValid = controllerSchedule.checkMoneyToBorrow(moneyToBorrow, facility); // check money to borrow
         if (isMoneyValid == true) {
@@ -237,13 +230,8 @@ public class UserView {
             System.out.println("[1] accept interest");
             System.out.println("[2] not accept interest");
             while (true) {
-                String acceptTheInterestNumSelectString = scanner.nextLine();
                 int acceptTheInterestNumSelect = 0;
-                try {
-                    acceptTheInterestNumSelect = Integer.valueOf(acceptTheInterestNumSelectString);
-                } catch (Exception e) {
-                    displayWrongDataType();
-                }
+                acceptTheInterestNumSelect = insertNumber(acceptTheInterestNumSelect);
                 switch (acceptTheInterestNumSelect) {
                     case 1: {
                         // continue borrowing
@@ -292,12 +280,7 @@ public class UserView {
         System.out.println("[2] if not");
         int agreeWithTerms = 0;
         while (true) {
-            String agreeWithTermsString = scanner.nextLine();
-            try {
-                agreeWithTerms = Integer.parseInt(agreeWithTermsString); // has to be numeric
-            } catch (Exception e) {
-                displayWrongDataType();
-            }
+            agreeWithTerms = insertNumber(agreeWithTerms);
             switch (agreeWithTerms) {
                 case 1: {
                     ControllerSchedule.checkTermRead(moneyToBorrow);
@@ -340,12 +323,7 @@ public class UserView {
         boolean isQuit = false;
         int termOfBorrowing = 0;
         while (true) {
-            String termOfBorrowingString = scanner.nextLine();
-            try {
-                termOfBorrowing = Integer.parseInt(termOfBorrowingString); // the selection has to be the number
-            } catch (Exception e) {
-                displayWrongDataType();
-            }
+            termOfBorrowing = insertNumber(termOfBorrowing);
             switch (termOfBorrowing) {
                 case 1, 2, 3, 6, 9, 12: {
                     ControllerSchedule.continueAcceptingInterest(termOfBorrowing, moneyToBorrow);
@@ -353,16 +331,25 @@ public class UserView {
                     break;
                 }
                 default:
-                System.out
+                    System.out
                             .println(
                                     "The choosen month is not accepted, reselect the month:");
-                
-                break;
+
+                    break;
             }
-            if(isQuit == true) {
+            if (isQuit == true) {
                 break;
             }
         }
+    }
 
+    public int insertNumber(int number) {
+        String numberString = scanner.nextLine();
+        try {
+            number = Integer.parseInt(numberString); // the selection has to be the number
+        } catch (Exception e) {
+            displayWrongDataType();
+        }
+        return number;
     }
 }

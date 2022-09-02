@@ -7,6 +7,8 @@ import java.util.List;
 public class TransactionRepository {
     private static int transactionCount = 0;
     private static int id = 1;
+    private static int borrowingTransactionCount = 0;
+    private static List<BorrowingTransaction> listBorrowingTransaction = new ArrayList<>();
     private static List<Transaction> listTransaction = new ArrayList<>();
 
     public static int addTransaction(Transaction transaction) {
@@ -80,9 +82,8 @@ public class TransactionRepository {
         return transactionHistory;
     }
 
-    private static int borrowingTransactionCount = 0;
-    private static int borrowingTransactionId = 1;
-    private static List<BorrowingTransaction> listBorrowingTransaction = new ArrayList<>();
+    
+    
     public static int addBorrowingTransaction(BorrowingTransaction borrowingTransaction) {
         // Helen: if (transaction.isValid() == true)
         borrowingTransactionCount += 1;
@@ -90,5 +91,15 @@ public class TransactionRepository {
         id++;
         listBorrowingTransaction.add(borrowingTransaction);
         return borrowingTransactionCount;
+    }
+
+    public BorrowingTransaction getBorrowingTransById(int id) {
+        BorrowingTransaction borrowingTransaction = new BorrowingTransaction();
+        for (BorrowingTransaction borrowList: listBorrowingTransaction) {
+            if (borrowList.getId() == id) {
+                borrowingTransaction = borrowList;
+            }
+        }
+        return borrowingTransaction;
     }
 }
