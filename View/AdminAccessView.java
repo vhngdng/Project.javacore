@@ -107,7 +107,7 @@ public class AdminAccessView {
                 }
                 case 6: {
                     isQuit = true;
-                    break;
+                    return;
                 }
                 default:
                     break;

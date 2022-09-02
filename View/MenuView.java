@@ -23,7 +23,7 @@ public class MenuView {
     }
 
 // Menu start
-    public boolean display(){
+    public void display(){
         scanner = new Scanner(System.in);
         boolean isQuit = false;
         while (true) {
@@ -57,19 +57,14 @@ public class MenuView {
         if (isQuit == true) {
             this.quit();
         }
-        return true;
     }
 
     /**
      * system quit
      */
     public void quit() {
-        adminAccessView = new AdminAccessView();
-        userView = new UserView();
         System.out.println("Hen gap lai !!!");
-        adminAccessView.close();
-        userView.close();      
-        this.close();
+        System.exit(1);
     }
 
     // close view

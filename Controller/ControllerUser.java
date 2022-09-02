@@ -117,6 +117,7 @@ public class ControllerUser {
     }
 
     public static void displayUserView() {
+        
         ControllerUser controllerUser = new ControllerUser();
         User user = User.getUser();
         JSONObject jsonObject = new JSONObject();

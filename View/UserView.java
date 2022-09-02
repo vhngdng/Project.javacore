@@ -12,7 +12,7 @@ import Model.User;
 import util.DateTimeUtil;
 
 public class UserView {
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
     private static ControllerUser controllerUser;
     private static ControllerTransaction controllerTransaction;
 
@@ -30,7 +30,8 @@ public class UserView {
         System.out.println("[9] Thoát");
     }
 
-    public void display(JSONObject userJson) {
+    public boolean display(JSONObject userJson) {
+        scanner = new Scanner(System.in);
         controllerUser = new ControllerUser();
         controllerTransaction = new ControllerTransaction();
         MenuView menuView = new MenuView();
@@ -41,6 +42,7 @@ public class UserView {
             int numSelect = 0;
             numSelect = insertNumber(numSelect);
             switch (numSelect) {
+                
                 case 1: {
                     controllerUser.showBalanceMoney();
                     break;
@@ -75,13 +77,14 @@ public class UserView {
                 }
                 case 9: {
                     isQuit = true;
+                    menuView.quit();
                     break;
                 }
                 default:
                     break;
             }
             if (isQuit == true) {
-                menuView.quit();
+                menuView.quit();      
             }
         }
     }
@@ -96,6 +99,7 @@ public class UserView {
     // chuyen tien menu
     public void transferMoney(User user) {
         // check expireDate
+        boolean isQuit = false;
         boolean isValid = controllerUser.checkExpireDateOfSender();
         if (isValid == false) {
             System.out.println("Your card is expired\nPlease call our hotline and contact us for the details");
@@ -146,19 +150,28 @@ public class UserView {
                     } else {
                         ControllerUser.displayUserView();
                     }
+                    isQuit = true;
                     break;
                 }
                 case 2: {
                     Map<Integer, Integer> map = controllerUser.selectBeneficiary();
                     transferProcess(map);
+                    isQuit = true;
+                    break;
                 }
                 case 3: {
                     display(controllerUser.getUserLoginJson());
+                    isQuit = true;
                     break;
                 }
                 default:
                     displayWrongSelection();
                     break;
+
+
+            }
+            if (isQuit == true) {
+                break;
             }
 
         }
@@ -343,12 +356,16 @@ public class UserView {
     }
 
     public int insertNumber(int number) {
+        scanner = new Scanner(System.in);
         String numberString = scanner.nextLine();
         try {
             number = Integer.parseInt(numberString); // the selection has to be the number
+            
         } catch (Exception e) {
             displayWrongDataType();
         }
+
+        
         return number;
     }
 }
