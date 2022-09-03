@@ -1,10 +1,12 @@
 package View;
 
+import java.util.List;
 import java.util.Scanner;
 import Controller.ControllerAdmin;
 import Controller.ControllerBooking;
 import Controller.ControllerTransaction;
 import Controller.ControllerUser;
+import Model.Transaction;
 
 public class AdminAccessView {
     private Scanner scanner;
@@ -53,7 +55,7 @@ public class AdminAccessView {
                     System.out.println("Hãy nhập current account/id của user");
                     int numToLock = 0;
                     numToLock = userView.insertNumber(numToLock);
-                    controllerAdmin.LockOrUnlockUser(numToLock);
+                    controllerAdmin.lockOrUnlockUser(numToLock);
                     break;
                 }
                 case 2: {
@@ -87,7 +89,8 @@ public class AdminAccessView {
                             break;
                         }
                         case 4: {  
-                            ControllerTransaction.transactionShowAll();
+                            List<Transaction> transList = ControllerTransaction.transactionShowAll();
+                            System.out.println(transList.toString());
                             break;
                         }
                         case 5: {

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import Controller.ControllerTransaction;
 import Controller.ControllerUser;
 import Model.User;
+import Model.UserRepository;
 import util.DateTimeUtil;
 
 public class UserView {
@@ -353,6 +354,7 @@ public class UserView {
             displayWrongDataType();
         }
 
+        
         return number;
     }
 }

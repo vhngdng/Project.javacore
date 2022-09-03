@@ -1,10 +1,7 @@
 package Controller;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Scanner;
-
-import Model.*;
 import org.json.JSONObject;
 import Model.CARDTYPE;
 import Model.Transaction;
@@ -82,7 +79,7 @@ public class ControllerUser {
     }
 
     public boolean checkMoneyOfSender(JSONObject moneyTransactionJson){
-        Transaction transaction = new Transaction();
+        
         int moneyTransfer = Integer.valueOf(moneyTransactionJson.get("moneyTransfer").toString());
         boolean isValid = UserRepository.checkMoneyOfSender(moneyTransfer);
         if (isValid == false) {
@@ -95,11 +92,6 @@ public class ControllerUser {
         return isValid;
     }
 
-    public static void checkVerificationCode(JSONObject checkCodeJson) {
-        String codeCheck = checkCodeJson.get("checkCode").toString();
-        int idOfThisTransaction = Integer.valueOf(checkCodeJson.getString("id").toString());
-        boolean isValid = TransactionRepository.checkCodeVerification(codeCheck, idOfThisTransaction);
-    }
 
     public void transferMoney(){
         User user = User.getUser();
