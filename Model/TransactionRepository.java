@@ -30,18 +30,14 @@ public class TransactionRepository {
         return transaction;
     }
 
-    public static boolean checkCodeVerification(String codeCheck, int idOfThisTransaction) {
-        return true;
-    }
+
 
 
     public static List<Transaction> getTransactionList() {
         return listTransaction;
     }
 
-    public void printAllListTransaction() {
-        System.out.println(Arrays.toString(listTransaction.toArray()));
-    }
+
 
     public static void transactionDateShow(int num) {
         for (Transaction listTrans : listTransaction) {
@@ -67,9 +63,6 @@ public class TransactionRepository {
         }
     }
 
-    public static void addTransactionUser(int currentAccount) {
-
-    }
 
     public static List<Transaction> getTransactionHistory() {
         List<Transaction>transactionHistory = new ArrayList<>();

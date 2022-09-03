@@ -57,9 +57,6 @@ public class ControllerTransaction {
 
     }
 
-    public void getAllTransactionDate() {
-
-    }
 
     public void transactionDayList(int num) {
         TransactionRepository.transactionDateShow(num);
@@ -76,8 +73,9 @@ public class ControllerTransaction {
         adminAccessView.display();
     }
 
-    public static void transactionShowAll() {
-        System.out.println(TransactionRepository.getTransactionList().toString());
+    public static List<Transaction> transactionShowAll() {
+        List<Transaction> transactionAllList = TransactionRepository.getTransactionList();
+        return transactionAllList;
     }
 
 

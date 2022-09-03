@@ -22,6 +22,7 @@ public class Main {
         UserRepository.addNewUser(user1);
         UserRepository.addNewUser(user2);
         Transaction transaction1 = new Transaction(2, 1, 200000, LocalDateTime.now().minusYears(2).minusMonths(2));
+        transaction1.setTransactionContent("transfer money");
         TransactionRepository.addTransaction(transaction1);
         MenuView menuView = new MenuView();
         
