@@ -84,4 +84,10 @@ public class ControllerTransaction {
         // online borrowing
         return UserRepository.onlineBorrowing(borrowingTransaction, borrowingUser);
     }
+
+    public static void addTransactionForSaving(SavingAccount savingAccount) {
+        Transaction transaction1 = new Transaction(User.getUser().getCurrentAccount(), User.getUser().getCurrentAccount(), (int)savingAccount.getSavingBalence(), LocalDateTime.now());
+                    transaction1.setTransactionContent("tiền gửi tiết kiệm ");
+        TransactionRepository.addTransaction(transaction1);
+    }
 }

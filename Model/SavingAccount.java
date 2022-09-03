@@ -1,6 +1,12 @@
 package Model;
 
 import java.time.LocalDate;
+
+import java.time.LocalDateTime;
+import java.util.Scanner;
+
+
+
 public class SavingAccount {
 
     private static final double[] SavingInterestRate = { 3.1, 3.7, 4.1, 4.5, 4.8 };
@@ -51,5 +57,6 @@ public class SavingAccount {
     public void setMonthlyDeposit(double monthlyDeposit) {
         this.monthlyDeposit = monthlyDeposit;
     }
+
 
 }

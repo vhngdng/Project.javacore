@@ -9,9 +9,18 @@ public class Transaction {
     protected LocalDateTime dateTimeTransaction;
     protected boolean isValid;
     protected int id;
+    protected  String transactionContent;
+
+    public String getTransactionContent() {
+        return transactionContent;
+    }
+
+    public void setTransactionContent(String transactionContent) {
+        this.transactionContent = transactionContent;
+    }
 
     public Transaction(int senderCurrentAccount, int beneficiaryCurrentAccount, int money,
-            LocalDateTime dateTimeTransaction2) {
+                       LocalDateTime dateTimeTransaction2) {
         this.senderCurrentAccount = senderCurrentAccount;
         this.beneficiaryCurrentAccount = beneficiaryCurrentAccount;
         this.money = money;
@@ -50,11 +59,12 @@ public class Transaction {
     public int getId() {
         return this.id;
     }
+
     @Override
     public String toString() {
         return "Transaction" + "\nsenderCurrentAccount = " + senderCurrentAccount + ", beneficiaryCurrentAccount = "
                 + beneficiaryCurrentAccount + ", dateTimeTransaction = "
-                + dateTimeTransaction.withNano(0) + ", money = " + money + ", result = " + isValid +"\n";
+                + dateTimeTransaction.withNano(0) + ", money = " + money + ", result = " + isValid + ", content: " + transactionContent + "\n";
     }
 
     public void setSenderCurrentAccount(int senderCurrentAccount) {

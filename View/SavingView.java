@@ -3,6 +3,7 @@ package View;
 import java.util.Scanner;
 
 import Controller.ControllerSaving;
+import Controller.ControllerTransaction;
 import Controller.ControllerUser;
 import Model.SavingAccount;
 
@@ -76,6 +77,8 @@ public class SavingView {
                     int balance = ControllerSaving.savingProcess(savingAccount);
                     System.out.println("Bạn đã gửi tiết kiệm thành công");
                     System.out.println("Số dư của bạn là: " + balance + "VND");
+                    ControllerTransaction.addTransactionForSaving(savingAccount);
+                    
                     return;
                 }
                 case 2: {
