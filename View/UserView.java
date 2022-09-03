@@ -1,6 +1,5 @@
 package View;
 
-
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,13 +20,11 @@ public class UserView {
         System.out.println("============Welcome=============");
         System.out.println("[1] Hiển thị số dư");
         System.out.println("[2] Chuyển tiền");
-        System.out.println("[3] Nạp tiền điện thoại");
-        System.out.println("[4] Gửi tiết kiệm");
-        System.out.println("[5] Thanh toán");
-        System.out.println("[6] Vay trực tuyến");
-        System.out.println("[7] Xem lịch sử giao dịch");
-        System.out.println("[8] Quay về menu");
-        System.out.println("[9] Thoát");
+        System.out.println("[3] Gửi tiết kiệm");
+        System.out.println("[4] Vay trực tuyến");
+        System.out.println("[5] Xem lịch sử giao dịch");
+        System.out.println("[6] Quay về menu");
+        System.out.println("[7] Thoát");
     }
 
     public boolean display(JSONObject userJson) {
@@ -52,30 +49,22 @@ public class UserView {
                     break;
                 }
                 case 3: {
-                    controllerUser.phoneRecharging();
+                    controllerUser.displaySavingView();
                     break;
                 }
                 case 4: {
-                    controllerUser.saving();
-                    break;
-                }
-                case 5: {
-                    controllerUser.payment();
-                    break;
-                }
-                case 6: {
                     controllerUser.onlineBorrowing();
                     break;
                 }
-                case 7: {
+                case 5: {
                     controllerTransaction.transactionHistory();
                     break;
                 }
-                case 8: {
+                case 6: {
                     controllerUser.logOut();
                     break;
                 }
-                case 9: {
+                case 7: {
                     isQuit = true;
                     menuView.quit();
                     break;
@@ -167,7 +156,6 @@ public class UserView {
                 default:
                     displayWrongSelection();
                     break;
-
 
             }
             if (isQuit == true) {
@@ -364,7 +352,6 @@ public class UserView {
         } catch (Exception e) {
             displayWrongDataType();
         }
-
 
         return number;
     }

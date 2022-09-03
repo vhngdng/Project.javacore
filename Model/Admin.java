@@ -1,11 +1,4 @@
 package Model;
-import java.util.LinkedList;
-import java.util.List;
-
-import View.AdminAccessView;
-
-import View.LoginView;
-
 public class Admin extends Person{
     
     // private static 

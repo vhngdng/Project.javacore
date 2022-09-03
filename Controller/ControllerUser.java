@@ -12,6 +12,7 @@ import Model.TransactionRepository;
 import Model.User;
 import Model.UserRepository;
 import View.MenuView;
+import View.SavingView;
 import View.UserView;
 import util.DateTimeUtil;
 
@@ -106,29 +107,6 @@ public class ControllerUser {
         userView.transferMoney(user);
     }
 
-    public void phoneRecharging() {
-
-
-
-    }
-
-    public SavingAccount saving() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(" mời bạn nhập số tiền gửi ");
-        double savingBalence  = scanner.nextDouble();
-        System.out.println( "chọm kì hạn muốn gửi : 3 , 6, 9 , 12  ");
-        int monthlyDeposit = scanner.nextInt();
-        double savingInterest = SavingAccount.getSavingInterestRate(monthlyDeposit);
-        LocalDate date =LocalDate.now();
-        return new SavingAccount(savingBalence,date,savingInterest,monthlyDeposit);
-
-
-
-    }
-
-    public void payment() {
-    }
- 
 
     public static void finishLine() {
         System.out.println("=========================================================================================");
@@ -202,7 +180,10 @@ public class ControllerUser {
         User user = User.getUser();
         boolean isValid = user.getExpiredDate().isAfter(LocalDateTime.now());
         return isValid;
+    }
 
-
+    public void displaySavingView() {
+        SavingView savingView = new SavingView();
+        savingView.displaySavingView();
     }
 }

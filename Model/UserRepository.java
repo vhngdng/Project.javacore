@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,6 @@ public class UserRepository {
      */
     public static User addNewUser(User person) {
         person.getCurrentAccount();
-
         int num = USER_COUNT + 1;
         id += 1;
         person.setId(id);
@@ -160,7 +159,6 @@ public class UserRepository {
 
     // chuyen tien
     public static int transferMoney(Transaction transaction) {
-        ControllerUser controllerUser = new ControllerUser();
         User benefiUser = getUserWithCurrentAccount(transaction.getBeneficiaryCurrentAccount());
         User sendUser = getUserWithCurrentAccount(transaction.getSenderCurrentAccount());
         if (benefiUser == sendUser) {
@@ -250,10 +248,18 @@ public class UserRepository {
         TransactionRepository.addBorrowingTransaction(borrowingTransaction);
         int id = borrowingTransaction.getId();
 
-        // đoạn này cần hoàn thiện
+        
         ControllerSchedule.showResultBorrowingTransaction(id, borrowingUser.getCurrentAccount());
         System.out.println("Số dư hiện tại của bạn :" + borrowingUser.getBalance());
         return borrowingUser.getBalance();
+    }
+
+    public static int minusTheSavingAmount(SavingAccount savingAccount) {
+        User user = User.getUser();
+        int amount = user.getBalance() - (int)savingAccount.getSavingBalence();
+        User.getUser().setBalance(amount);
+        
+        return User.getUser().getBalance();
     }
 
 }

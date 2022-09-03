@@ -6,8 +6,6 @@ import Controller.ControllerLogin;
 public class MenuView {
     private Scanner scanner;
     private BookingView bookingView;
-    private AdminAccessView adminAccessView;
-    private UserView userView;
     public MenuView() {
 
     }

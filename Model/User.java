@@ -1,10 +1,7 @@
 package Model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 import java.util.regex.Pattern;
 
 public class User extends Person {
@@ -39,31 +36,31 @@ public class User extends Person {
     }
 
     public int getCurrentAccount() {
-        return currentAccount;
+        return this.currentAccount;
     }
 
     public int getBalance() {
-        return balance;
+        return this.balance;
     }
 
     public int getCardNumber() {
-        return cardNumber;
+        return this.cardNumber;
     }
 
     public LocalDateTime getExpiredDate() {
-        return expiredDate;
+        return this.expiredDate;
     }
 
     public CARDTYPE getCardType() {
-        return CardType;
+        return this.CardType;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setCurrentAccount(int currentAccount) {
@@ -87,7 +84,7 @@ public class User extends Person {
     }
 
     public void setCardType(CARDTYPE cardType) {
-        CardType = cardType;
+        this.CardType = cardType;
     }
 
     public void setEmail(String email) {
