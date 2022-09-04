@@ -115,20 +115,6 @@ public class UserRepository {
         return user;
     }
 
-    public static boolean checkMoney(User user, int currentAccount) {
-        boolean isValid = false;
-
-        int moneyTransfer = user.getBalance();
-        user = checkCurrentAccount(user);
-        if (moneyTransfer > user.getBalance()) {
-            System.out.println("So tien khong hop le");
-            isValid = false;
-        } else {
-            isValid = true;
-        }
-
-        return isValid;
-    }
 
     public static boolean checkMoneyOfSender(int moneyTransfer) {
         boolean isValid = false;
