@@ -33,118 +33,95 @@ public class ControllerBooking {
             switch (num) {
                 case 1: {
                     address = "Ba Đình";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 2: {
                     address = "Bắc Từ Liêm";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 3: {
                     address = "Cầu Giấy";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 4: {
                     address = "Hà Đông";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 default:
                     break;
             }
-            if (isValid == true) {
-                break;
-            }
         }
-        return address;
+
     }
 
     public static String addDaNangBranch(int num) {
         String address = null;
-        boolean isValid = false;
         while (true) {
             switch (num) {
                 case 1: {
                     address = "Quận Cẩm Lệ";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 2: {
                     address = "Quận Hải Châu";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 3: {
                     address = "Quận Hòa Vang";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 4: {
                     address = "Quận Liên Chiều";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 default:
                     break;
             }
-            if (isValid == true) {
-                break;
-            }
+
         }
-        return address;
+
     }
 
     public static String addHoChiMinhBranch(int num) {
         String address = null;
-        boolean isValid = false;
+
         while (true) {
             switch (num) {
                 case 1: {
                     address = "Quận 1";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 2: {
                     address = "Quận 10";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 3: {
                     address = "Quận 11";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 4: {
                     address = "Quận 12";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 5: {
                     address = "Quận 12";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 6: {
                     address = "Quận 3";
-                    isValid = true;
-                    break;
+                    return address;
                 }
                 case 7: {
                     address = "Quận 7";
-                    isValid = true;
-                    break;
+                    return address;
                 }
 
                 default:
                     break;
             }
-            if (isValid == true) {
-                break;
-            }
+
         }
-        return address;
+       
     }
 
     public static void registerBooking(Booking booking) {
