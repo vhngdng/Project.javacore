@@ -167,7 +167,7 @@ public class UserView {
         }
 
     }
-
+    // select other User to transfer money
     public void transferProcess(Map<Integer, Integer> map) {
         int numSelect = 0;
         int money = 0;
@@ -176,6 +176,19 @@ public class UserView {
         System.out.println("Amount: ");
         money = insertNumber(money);
         controllerUser.checkConditionValid(numSelect, money, map);
+    }
+
+    //show the result when the transfer is completed
+    public static void showTransactionResult(Transaction transaction) {
+        System.out.println(
+                "Số dư TK VCB " + transaction.getSenderCurrentAccount() + " -" + transaction.getMoney() + "VND, lúc "
+                        + transaction.getDateTimeTransaction().withNano(0) + " " + ".Ref MBVCB."
+                        + transaction.getBeneficiaryCurrentAccount()
+                        + "." + UserRepository.getNameOfUser(transaction.getBeneficiaryCurrentAccount())
+                        + " chuyển tiền. CT tu "
+                        + transaction.getSenderCurrentAccount() + " toi " + transaction.getBeneficiaryCurrentAccount());
+        System.out.println("Số tiền còn dư của bạn :"
+                + UserRepository.getUserWithCurrentAccount(transaction.getSenderCurrentAccount()).getBalance());
     }
 
     // online borrowing
@@ -359,15 +372,5 @@ public class UserView {
         return number;
     }
 
-    public static void showTransactionResult(Transaction transaction) {
-        System.out.println(
-                "Số dư TK VCB " + transaction.getSenderCurrentAccount() + " -" + transaction.getMoney() + "VND, lúc "
-                        + transaction.getDateTimeTransaction().withNano(0) + " " + ".Ref MBVCB."
-                        + transaction.getBeneficiaryCurrentAccount()
-                        + "." + UserRepository.getNameOfUser(transaction.getBeneficiaryCurrentAccount())
-                        + " chuyển tiền. CT tu "
-                        + transaction.getSenderCurrentAccount() + " toi " + transaction.getBeneficiaryCurrentAccount());
-        System.out.println("Số tiền còn dư của bạn :"
-                + UserRepository.getUserWithCurrentAccount(transaction.getSenderCurrentAccount()).getBalance());
-    }
+   
 }
