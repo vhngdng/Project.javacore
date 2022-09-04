@@ -9,8 +9,6 @@ import java.util.Map;
 import Controller.ControllerSchedule;
 import Controller.ControllerUser;
 
-import View.MenuView;
-
 public class UserRepository {
     private static int i = 0;
     private static int USER_COUNT = 1;
