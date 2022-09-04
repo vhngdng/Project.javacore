@@ -15,7 +15,7 @@ public class ControllerTransaction {
 
     public static void transferMoney(JSONObject moneyTransactionJson) {
         Transaction transaction = ControllerTransaction.convertJsonObjectToTransaction(moneyTransactionJson);
-        transaction.setTransactionContent("Internal transfer");
+        transaction.setTransactionContent("transfer money");
         TransactionRepository.addTransaction(transaction);
 
         UserRepository.transferMoney(transaction);
