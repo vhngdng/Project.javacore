@@ -67,6 +67,7 @@ public class ControllerUser {
 
     // request UserRepository to check current account
     public User checkBeneficiary(JSONObject jsonObject){
+        userView = new UserView();
         int currentAccount = Integer.valueOf(jsonObject.get("currentAccount").toString());
         User userBeneficiary = new User();
         userBeneficiary.setCurrentAccount(currentAccount);

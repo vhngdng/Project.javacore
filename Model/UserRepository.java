@@ -100,7 +100,7 @@ public class UserRepository {
     public static User checkCurrentAccount(User user) {
         for (Person listPerson : personList) {
             if (listPerson != null && listPerson.getRole() != -1
-                    && ((User) listPerson).getCurrentAccount() == (user.getCurrentAccount())) {
+                    && ((User) listPerson).getCurrentAccount() == (User.getUser().getCurrentAccount())) {
                 user = (User) listPerson;
                 break;
             }
