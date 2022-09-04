@@ -12,7 +12,7 @@ import Controller.ControllerUser;
 import View.MenuView;
 
 public class UserRepository {
-
+    private static int i = 0;
     private static int USER_COUNT = 1;
     User user;
     Person person;
@@ -77,21 +77,24 @@ public class UserRepository {
 
     public static Person checkLoginUser(Person person){
         for (Person listPerson : personList) {
-            if (listPerson != null
-                    && listPerson.getName().equals(person.getName())
+            if (listPerson.getName().equals(person.getName())
+                    && listPerson.getPassword().equals(person.getPassword())
                     && listPerson.getCurrentAccount() == person.getCurrentAccount()) {
                 person = listPerson;
                 break;
             }
         }
+        if (i == 3) {
+            ControllerUser controllerUser = new ControllerUser();
+            controllerUser.displayMenuView();
+        }
         if (person.isLocked() == true) {
             person = null;
             System.out.println("Tài khoản đã bị khóa, không thể đăng nhập");
-            MenuView menuView = new MenuView();
-            menuView.display();
+            
         } else if (person.getRole() != -1 && person.getRole() != 1) {
             person = null;
-            System.out.println("sai thông tin đăng nhập, vui lòng nhập lại");
+            System.out.println("sai thông tin đăng nhập");
         }
         return person;
     }
@@ -158,10 +161,10 @@ public class UserRepository {
 
 
     // chuyen tien
-    public static int transferMoney(Transaction transaction) {
+    public static void transferMoney(Transaction transaction) {
         User benefiUser = getUserWithCurrentAccount(transaction.getBeneficiaryCurrentAccount());
         User sendUser = getUserWithCurrentAccount(transaction.getSenderCurrentAccount());
-        if (benefiUser == sendUser) {
+        if (benefiUser == sendUser) {   
             System.out.println("Người nhận không phù hợp");
             ControllerUser.displayUserView();
         }
@@ -170,12 +173,13 @@ public class UserRepository {
 
         sendUser.setBalance(sendUser.getBalance() - money);
         transaction.setValid(true);
+        transaction.setTransactionContent("transfer money");    // them content truoc khi add vao list
         // add transaction in user
         TransactionRepository.addTransaction(transaction);
         int id = transaction.getId();
+        // show result transaction
         ControllerUser.showResultTransactionBeneficiary(id, transaction.getSenderCurrentAccount());
-        System.out.println("Số tiền còn dư của bạn :" + sendUser.getBalance());
-        return sendUser.getBalance();
+   
     }
 
     // check ID or current account de tim user roi set user lock or unlock

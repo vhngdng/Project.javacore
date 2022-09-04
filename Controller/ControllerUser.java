@@ -49,6 +49,7 @@ public class ControllerUser {
         String name = userJsonObject.get("name").toString();
         String password = userJsonObject.get("password").toString();
 
+        //create user object
         User user = new User(currentAccount, balance, cardNumber, expiredDate, name, cardType, email, address,
                 password);
         user.setId(id);
@@ -64,23 +65,26 @@ public class ControllerUser {
         return userJson;
     }
 
+    // request UserRepository to check current account
     public User checkBeneficiary(JSONObject jsonObject){
         int currentAccount = Integer.valueOf(jsonObject.get("currentAccount").toString());
         User userBeneficiary = new User();
         userBeneficiary.setCurrentAccount(currentAccount);
+        //UserRepository check
         userBeneficiary = UserRepository.checkCurrentAccount(userBeneficiary);
         UserRepository.checkCurrentAccount(userBeneficiary);
 
         if (userBeneficiary == null) {
-
+            // is not valid ---> direct to User log-in menu
             userView.display(userJson);
         }
         return userBeneficiary;
     }
 
+    // check enough money of sender
     public boolean checkMoneyOfSender(JSONObject moneyTransactionJson){
-        
         int moneyTransfer = Integer.valueOf(moneyTransactionJson.get("moneyTransfer").toString());
+        //request repository to check money
         boolean isValid = UserRepository.checkMoneyOfSender(moneyTransfer);
         if (isValid == false) {
             ControllerUser controllerUser = new ControllerUser();
@@ -92,7 +96,7 @@ public class ControllerUser {
         return isValid;
     }
 
-
+    // direct to userView to transfer money
     public void transferMoney(){
         User user = User.getUser();
         userView = new UserView();
@@ -104,8 +108,8 @@ public class ControllerUser {
         System.out.println("=========================================================================================");
     }
 
+    //  direct to User menu
     public static void displayUserView() {
-        
         ControllerUser controllerUser = new ControllerUser();
         User user = User.getUser();
         JSONObject jsonObject = new JSONObject();
@@ -114,6 +118,7 @@ public class ControllerUser {
         userView.display(jsonObject);
     }
 
+    // show other User in Map <username, current account>
     public Map<Integer, Integer> selectBeneficiary() {
         System.out.println("List of beneficiary Users");
         Map<Integer, Integer> map = UserRepository.showOtherUsers();
@@ -124,12 +129,14 @@ public class ControllerUser {
         return map;
     }
 
+    // log out
     public void logOut(){
         User.setUser(null);
         MenuView menuView = new MenuView();
         menuView.display();
     }
 
+    // select beneficiary user
     public void checkConditionValid(int numSelect, int money, Map<Integer, Integer> map){
         userView = new UserView();
         int beneficiaryCurrentAccount = 0;
@@ -141,6 +148,7 @@ public class ControllerUser {
             userView.transferProcess(map);
         }
 
+        //create a transaction for transfering money
         if (UserRepository.checkMoneyOfSender(money) == true) {
             Transaction transaction = new Transaction(User.getUser().getCurrentAccount(), beneficiaryCurrentAccount,
                     money, LocalDateTime.now());
@@ -154,12 +162,11 @@ public class ControllerUser {
         System.out.println("Số dư của bạn là: " + User.getUser().getBalance());
     }
 
+    //in câu lẹnh chuyển tiền khi thành công
     public static void showResultTransactionBeneficiary(int id, int senderCurrentAccount) {
         Transaction transaction = TransactionRepository.getTransactionById(id);
-        System.out.println("Số dư TK VCB " + senderCurrentAccount + " -" + transaction.getMoney() + "VND, lúc "
-                + transaction.getDateTimeTransaction().withNano(0) + " " + ".Ref MBVCB." + transaction.getBeneficiaryCurrentAccount()
-                + "." + UserRepository.getNameOfUser(transaction.getBeneficiaryCurrentAccount()) + " chuyển tiền. CT tu "
-                + senderCurrentAccount + " toi " + transaction.getBeneficiaryCurrentAccount());
+        UserView.showTransactionResult(transaction);
+        
     }
 
     public void onlineBorrowing(){
@@ -177,5 +184,10 @@ public class ControllerUser {
     public void displaySavingView() {
         SavingView savingView = new SavingView();
         savingView.displaySavingView();
+    }
+
+    public void displayMenuView() {
+        MenuView menuView = new MenuView();
+        menuView.display();
     }
 }

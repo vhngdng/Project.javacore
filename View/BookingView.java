@@ -3,6 +3,7 @@ package View;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import Controller.ControllerBooking;
+import Controller.ControllerUser;
 import Model.Booking;
 import Model.User;
 import util.DateTimeUtil;
@@ -25,9 +26,12 @@ public class BookingView {
     }
 
     public boolean display() {
+        ControllerUser controllerUser = new ControllerUser();
         boolean isValid = false;
         String address = null;
         int num = 0;
+        int i = 0;
+        int j = 0;
         UserView userView = new UserView();
         scanner = new Scanner(System.in);
         displaySelection();
@@ -41,19 +45,30 @@ public class BookingView {
                 break;
             }else{
                 System.out.println("email không phù hợp, hãy nhập lại");
+                i++;
+            }
+            if (i == 3) {
+                controllerUser.displayMenuView();
             }
         }
-        System.out.println("Nhập số điện thoại");
+        
         int phoneNumber = 0;
         while (true) {
+            System.out.println("Nhập số điện thoại");
             String phoneNumberString = scanner.nextLine();
             try {
                 phoneNumber = Integer.valueOf(phoneNumberString);
+                if (User.phoneNumberRegex(phoneNumberString) == true) {
+                    break;
+                }else{
+                    j++;
+                }
             } catch (Exception e) {
                 System.out.println("Số điện thoại không đúng");
+                
             }
-            if (User.phoneNumberRegex(phoneNumberString) == true) {
-                break;
+            if (j == 3) {
+                controllerUser.displayMenuView();
             }
 
         }
@@ -64,14 +79,15 @@ public class BookingView {
             String dateTime = scanner.nextLine();
             try {
                 date = DateTimeUtil.convertStringToLocalDate(dateTime);
+                if (date.isAfter(LocalDateTime.now()) == true && date.getHour() < 18) {
+                    break;
+                } else {
+                    System.out.println("Thời gian không phù hợp, hãy nhập lại");
+                }
             } catch (Exception e) {
                 System.out.println("Ngày hẹn không phù hợp, xin hãy nhập lại: ");
             }
-            if (date.isAfter(LocalDateTime.now()) == true && date.getHour() < 18) {
-                break;
-            } else {
-                System.out.println("Thời gian không phù hợp, hãy nhập lại");
-            }
+            
         }
         displayCity();
         int numSelect = 0;

@@ -1,7 +1,7 @@
 package Model;
 public class Admin extends Person{
     
-    // private static 
+
     public Admin() {
         this.name = "admin";
         this.password ="admin";

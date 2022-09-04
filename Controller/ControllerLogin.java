@@ -7,6 +7,7 @@ import Model.UserRepository;
 import View.AdminAccessView;
 
 import View.LoginView;
+import View.MenuView;
 import View.UserView;
 
 public class ControllerLogin {
@@ -36,10 +37,11 @@ public class ControllerLogin {
 
         Person checkedPerson = UserRepository.checkLoginUser(person);
         
-        if (checkedPerson == null) {
-            loginView.display();
+        if (checkedPerson == null) {    // login access is denied -> back to menu view
+            MenuView menuView = new MenuView();
+            menuView.display();
         }else{
-            if (checkedPerson.getRole() == -1) {
+            if (checkedPerson.getRole() == -1) {    // role = -1 -> admin
                 adminAccessView.display();
             }else{
                 User user = (User) checkedPerson;

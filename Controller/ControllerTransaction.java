@@ -13,13 +13,12 @@ import util.DateTimeUtil;
 public class ControllerTransaction {
     private AdminAccessView adminAccessView = new AdminAccessView();
 
-    public static int transferMoney(JSONObject moneyTransactionJson) {
+    public static void transferMoney(JSONObject moneyTransactionJson) {
         Transaction transaction = ControllerTransaction.convertJsonObjectToTransaction(moneyTransactionJson);
         transaction.setTransactionContent("Internal transfer");
         TransactionRepository.addTransaction(transaction);
 
-        // chuyen tien
-        return UserRepository.transferMoney(transaction);
+        UserRepository.transferMoney(transaction);
     }
 
     // convert json to trans

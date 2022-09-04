@@ -2,6 +2,7 @@ package Model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Booking {
@@ -25,9 +26,15 @@ public class Booking {
     }
 
     public static void showList() {
+        if (bList.isEmpty() == true) {
+            System.out.println("There are no bookings");
+            return;
+        }
         for (Booking listBooking : bList) {
             System.out.println(listBooking);
         }
+        
+        
     }
 
     @Override

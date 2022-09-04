@@ -10,7 +10,7 @@ public class LoginView {
     public void display(){
         controllerLogin = new ControllerLogin();
         scanner = new Scanner(System.in);
-        System.out.println("Hay nhap Name va PassWord:");
+        System.out.println("Hay nhap Name, PassWord va current account:");
         System.out.println("Your Name: ");
         String name = scanner.nextLine();
         System.out.println("Your Password: ");

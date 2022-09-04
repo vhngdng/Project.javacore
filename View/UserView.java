@@ -7,6 +7,7 @@ import Controller.ControllerSchedule;
 import org.json.JSONObject;
 import Controller.ControllerTransaction;
 import Controller.ControllerUser;
+import Model.Transaction;
 import Model.User;
 import Model.UserRepository;
 import util.DateTimeUtil;
@@ -258,8 +259,8 @@ public class UserView {
     }
 
     private void notAcceptConditionAndReturnMain() {
-        System.out.println("Thank you for your concern");
-        System.out.println("Return to the main");
+        System.out.println("Thank you for your concern, the process will be cancelled");
+        System.out.println("Back to the main");
         ControllerUser.displayUserView();
     }
 
@@ -297,7 +298,7 @@ public class UserView {
                     displayWrongSelection();
                     break;
             }
-            if (isQuit = true) {
+            if (isQuit == true) {
                 break;
             }
 
@@ -354,7 +355,18 @@ public class UserView {
             displayWrongDataType();
         }
 
-        
         return number;
+    }
+
+    public static void showTransactionResult(Transaction transaction) {
+        System.out.println(
+                "Số dư TK VCB " + transaction.getSenderCurrentAccount() + " -" + transaction.getMoney() + "VND, lúc "
+                        + transaction.getDateTimeTransaction().withNano(0) + " " + ".Ref MBVCB."
+                        + transaction.getBeneficiaryCurrentAccount()
+                        + "." + UserRepository.getNameOfUser(transaction.getBeneficiaryCurrentAccount())
+                        + " chuyển tiền. CT tu "
+                        + transaction.getSenderCurrentAccount() + " toi " + transaction.getBeneficiaryCurrentAccount());
+        System.out.println("Số tiền còn dư của bạn :"
+                + UserRepository.getUserWithCurrentAccount(transaction.getSenderCurrentAccount()).getBalance());
     }
 }
