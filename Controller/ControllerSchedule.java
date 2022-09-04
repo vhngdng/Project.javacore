@@ -72,7 +72,7 @@ public class ControllerSchedule {
             return false;
         }
     }
-
+    // print Borrowing transaction
     public static void showResultBorrowingTransaction(int id, int currentAccount) {
         TransactionRepository transactionRepository = new TransactionRepository();
         BorrowingTransaction borrowingTransaction = transactionRepository.getBorrowingTransById(id);

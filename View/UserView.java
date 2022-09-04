@@ -141,27 +141,21 @@ public class UserView {
                     } else {
                         ControllerUser.displayUserView();
                     }
-                    isQuit = true;
                     break;
                 }
                 case 2: {
                     Map<Integer, Integer> map = controllerUser.selectBeneficiary();
                     transferProcess(map);
-                    isQuit = true;
                     break;
                 }
                 case 3: {
                     display(controllerUser.getUserLoginJson());
-                    isQuit = true;
                     break;
                 }
                 default:
                     displayWrongSelection();
                     break;
 
-            }
-            if (isQuit == true) {
-                break;
             }
 
         }
@@ -194,7 +188,6 @@ public class UserView {
     // online borrowing
     public void onlineBorrowing(User user) {
         int number = 0;
-        boolean isValid = false;
         // System.out.println("test");//Helen: not use this
         System.out.println("Sender information: " + user.getCardType());
         System.out.println("User balance: " + user.getBalance());
@@ -207,25 +200,20 @@ public class UserView {
             switch (number) {
                 case 1: {
                     consumerLoanProcess(user);
-                    isValid = true;
                     break;
                 }
                 case 2: {
                     System.out.println("Please call our hotline for your loan consulation");
-                    isValid = true;
-                    break;
+                    return;
                 }
-                case 3: {
-                    isValid = true;
-                    break;
+                case 3: { 
+                    return;
                 }
                 default:
                     displayWrongSelection();
                     break;
             }
-            if (isValid == true) {
-                break;
-            }
+            
         }
 
     }
@@ -285,7 +273,6 @@ public class UserView {
     }
 
     public void termAndCondition(int moneyToBorrow) {
-        boolean isQuit = false;
         System.out.println("Did anyone in your family borrow money from bank");
         System.out.println("Terms and conditions: I confirm that");
         System.out.println("This loan purpose is to make payment for personal/family consumption");
@@ -300,20 +287,15 @@ public class UserView {
             switch (agreeWithTerms) {
                 case 1: {
                     ControllerSchedule.checkTermRead(moneyToBorrow);
-                    isQuit = true;
                     break;
                 }
                 case 2: {
                     notAcceptConditionAndReturnMain();
-                    isQuit = true;
                     break;
                 }
                 default:
                     displayWrongSelection();
                     break;
-            }
-            if (isQuit == true) {
-                break;
             }
 
         }
@@ -343,7 +325,6 @@ public class UserView {
             switch (termOfBorrowing) {
                 case 1, 2, 3, 6, 9, 12: {
                     ControllerSchedule.continueAcceptingInterest(termOfBorrowing, moneyToBorrow);
-                    isQuit = true;
                     break;
                 }
                 default:
@@ -353,9 +334,7 @@ public class UserView {
 
                     break;
             }
-            if (isQuit == true) {
-                break;
-            }
+
         }
     }
 

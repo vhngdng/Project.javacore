@@ -236,7 +236,7 @@ public class UserRepository {
         TransactionRepository.addBorrowingTransaction(borrowingTransaction);
         int id = borrowingTransaction.getId();
 
-        
+        // print Borrowing Transaction
         ControllerSchedule.showResultBorrowingTransaction(id, borrowingUser.getCurrentAccount());
         System.out.println("Số dư hiện tại của bạn :" + borrowingUser.getBalance());
         return borrowingUser.getBalance();

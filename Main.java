@@ -7,6 +7,7 @@ import View.MenuView;
 
 public class Main {
     public static void main(String[] args){
+        
         User user1 = new User(1, 15000000,
                 967362123, LocalDateTime.of(2022, 6, 6, 10, 30, 30), "1",
                 CARDTYPE.DEBIT, "vhngdng", "10 quan thanh", "1");

@@ -45,7 +45,7 @@ public class SavingView {
                         userView.displayWrongSelection();
                         break;
                 }
-                if (isQuit = true) {
+                if (isQuit == true) {
                     break;
                 }
             }
@@ -53,6 +53,7 @@ public class SavingView {
     }
 
     public void displayInformationSaving(SavingAccount savingAccount) {
+        UserView userView = new UserView();
         scanner = new Scanner(System.in);
         int number = 0;
         System.out.println(" Số tiền gửi  là :" + savingAccount.getSavingBalence() + "VND");
@@ -85,9 +86,10 @@ public class SavingView {
                     System.out.println("bạn đã từ chối gửi tiết kiệm");
                     System.out.println(" Thank you for your concern");
                     ControllerUser.displayUserView();
-                    return;
+                    break;
                 }
-                default: 
+                default:
+                userView.displayWrongSelection();
                 break;
             }
         }
