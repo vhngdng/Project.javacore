@@ -86,8 +86,7 @@ public class ControllerUser {
         int moneyTransfer = Integer.valueOf(moneyTransactionJson.get("moneyTransfer").toString());
         //request repository to check money
         boolean isValid = UserRepository.checkMoneyOfSender(moneyTransfer);
-        if (isValid == false) {
-            
+        if (isValid == false) { 
             ControllerUser controllerUser = new ControllerUser();
             userView.display(controllerUser.getUserLoginJson());
         } else {
