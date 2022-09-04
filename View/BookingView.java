@@ -41,14 +41,14 @@ public class BookingView {
         String email = "";
         while (true) {
             email = scanner.nextLine();
-            if (User.emailRegex(email) == true) {
+            if (User.emailRegex(email) == true) {       // check email regex
                 break;
             }else{
                 System.out.println("email không phù hợp, hãy nhập lại");
                 i++;
             }
             if (i == 3) {
-                controllerUser.displayMenuView();
+                controllerUser.displayMenuView();           //back to menu
             }
         }
         
@@ -58,7 +58,7 @@ public class BookingView {
             String phoneNumberString = scanner.nextLine();
             try {
                 phoneNumber = Integer.valueOf(phoneNumberString);
-                if (User.phoneNumberRegex(phoneNumberString) == true) {
+                if (User.phoneNumberRegex(phoneNumberString) == true) {     // regex phone number
                     break;
                 }else{
                     j++;
@@ -67,7 +67,7 @@ public class BookingView {
                 System.out.println("Số điện thoại không đúng");
                 
             }
-            if (j == 3) {
+            if (j == 3) {                               // sai 3 lan ve lai menu
                 controllerUser.displayMenuView();
             }
 
@@ -79,7 +79,7 @@ public class BookingView {
             String dateTime = scanner.nextLine();
             try {
                 date = DateTimeUtil.convertStringToLocalDate(dateTime);
-                if (date.isAfter(LocalDateTime.now()) == true && date.getHour() < 18) {
+                if (date.isAfter(LocalDateTime.now()) == true && date.getHour() < 18) {         // hour < 18
                     break;
                 } else {
                     System.out.println("Thời gian không phù hợp, hãy nhập lại");
@@ -89,13 +89,13 @@ public class BookingView {
             }
             
         }
-        displayCity();
+        displayCity();          // chọn thành phố
         int numSelect = 0;
         while (true) {
             numSelect = userView.insertNumber(numSelect);
             switch (numSelect) {
                 case 1: {
-                    ControllerBooking.showHaNoiAddressBranch();
+                    ControllerBooking.showHaNoiAddressBranch();         // chọn chi nhánh o ha noi
                     System.out.println("Chọn chi nhánh");
                     num = userView.insertNumber(num);
                     address = ControllerBooking.addHaNoiBranch(num);
@@ -103,7 +103,7 @@ public class BookingView {
                     break;
                 }
                 case 2: {
-                    ControllerBooking.showHoChiMinhAddressBranch();
+                    ControllerBooking.showHoChiMinhAddressBranch();        // chon chi nhanh o HCM
                     System.out.println("Chọn chi nhánh");
                     num = userView.insertNumber(num);
                     address = ControllerBooking.addHoChiMinhBranch(num);
@@ -111,7 +111,7 @@ public class BookingView {
                     break;
                 }
                 case 3: {
-                    ControllerBooking.showDaNangAddressBranch();
+                    ControllerBooking.showDaNangAddressBranch();            // chọn chi nhánh ở da nang
                     System.out.println("Chọn chi nhánh");
                     num = userView.insertNumber(num);
                     address = ControllerBooking.addDaNangBranch(num);
@@ -126,7 +126,8 @@ public class BookingView {
             }
         }
         Booking booking = new Booking(name, address, email, phoneNumber, date);
-        ControllerBooking.registerBooking(booking);
+        Booking.addBooking(booking);                                                // add booking vao list     
+        ControllerBooking.registerBooking(booking);                     
         return false;
     }
 

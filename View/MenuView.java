@@ -28,7 +28,7 @@ public class MenuView {
             displaySelection();
             int numSelect = 0;
             UserView userView = new UserView();
-            numSelect = userView.insertNumber(numSelect);
+            numSelect = userView.insertNumber(numSelect);           
             switch (numSelect) {
                 case 1: {
                     ControllerLogin controllerLogin = new ControllerLogin();

@@ -8,7 +8,7 @@ import Model.User;
 import View.UserView;
 
 public class ControllerSchedule {
-
+    // details of loan
     public static void scheduleOfPayment(double yearlyInterestRate, int termOfBorrowing, int moneyToBorrow) {
         double monthlyInterestRate = yearlyInterestRate / 12; // Monthly interest rate
         int principal = moneyToBorrow;
@@ -22,7 +22,7 @@ public class ControllerSchedule {
                 "Principal Payment", "Interest Payment", "Monthly Payment");
         System.out.printf("%-30s %-30s %-30s %-30s %-30s\n", 0, principal, " ", " ", " ");
         for (int i = 1; i <= termOfBorrowing; i++) {
-            double principalPayment = principal / termOfBorrowing;
+            double principalPayment = principal / termOfBorrowing;          
             double remainingPrincipal = principal - principalPayment * i;
             double interestPayment = (remainingPrincipal + principalPayment) * monthlyInterestRate;
             double monthlyPayment = principalPayment + interestPayment;
@@ -46,17 +46,17 @@ public class ControllerSchedule {
     public static void continueAcceptingInterest(int termOfBorrowing, int moneyToBorrow) {
         double yearlyInterestRate = 0.18;
         double timeToExpiredDateInDays = Duration
-                .between(LocalDateTime.now(), User.getUser().getExpiredDate())
+                .between(LocalDateTime.now(), User.getUser().getExpiredDate())          // duration before expired date
                 .toDays();
         System.out.println(timeToExpiredDateInDays);
         double timeToExpiredDateInMonths = timeToExpiredDateInDays / 30;
         System.out.println("Time to Expired Date In Months: " + timeToExpiredDateInMonths);
-        if (termOfBorrowing < timeToExpiredDateInMonths) {
+        if (termOfBorrowing < timeToExpiredDateInMonths) {                              // expired date is valid
             UserView userView = new UserView();
-            userView.scheduleOfPayment();
-            ControllerSchedule.scheduleOfPayment(yearlyInterestRate, termOfBorrowing,
+            userView.scheduleOfPayment();                                               // details of interest
+            ControllerSchedule.scheduleOfPayment(yearlyInterestRate, termOfBorrowing,    // show details of loan 
                     moneyToBorrow);
-            userView.termAndCondition(moneyToBorrow);
+            userView.termAndCondition(moneyToBorrow);                                   
 
         }else {
             System.out.println("You cannot loan the money, your card is expired");

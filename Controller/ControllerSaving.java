@@ -18,19 +18,20 @@ public class ControllerSaving {
 
     public void savingsInformation(SavingAccount savingAccount) {
         SavingView savingView = new SavingView();
-        savingView.displayInformationSaving(savingAccount);
+        savingView.displayInformationSaving(savingAccount);                         // show result
     }
 
 
     public static boolean checkSavingBalance(double savingBalance) {
-        if (User.getUser().getBalance() >= savingBalance) {
+        boolean isValid = UserRepository.checkSavingBalance(savingBalance);
+        if (isValid == true) {
             return true;
         }else{
-            SavingView savingView = new SavingView();
+            SavingView savingView = new SavingView();               // amount is not valid -> back to saving view
             savingView.displayWrongAmount();
             savingView.displaySavingView();
+            return false;
         }
-        return true;
     }
 
 	public static int savingProcess(SavingAccount savingAccount) {

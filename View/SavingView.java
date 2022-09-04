@@ -26,7 +26,7 @@ public class SavingView {
                 System.out.println("Insert your saving money again");
             }
         }
-        boolean isValid = ControllerSaving.checkSavingBalance(savingBalance);
+        boolean isValid = ControllerSaving.checkSavingBalance(savingBalance);                   // check saving money is enough or not
         if (isValid == true) {
             System.out.println("chọn kì hạn muốn gửi : 3 , 6, 9 , 12 ");
             while (true) {
@@ -35,9 +35,9 @@ public class SavingView {
                 switch (monthlyDeposit) {
                     case 3, 6, 9, 12: {
                         ControllerSaving controllerSaving = new ControllerSaving();
-                        SavingAccount savingAccount = controllerSaving.saving(savingBalance,
+                        SavingAccount savingAccount = controllerSaving.saving(savingBalance,                 // get saving interest rate and date  
                                 monthlyDeposit);
-                        controllerSaving.savingsInformation(savingAccount);
+                        controllerSaving.savingsInformation(savingAccount);                     
                         isQuit = true;
                         break;
                     }
@@ -52,7 +52,7 @@ public class SavingView {
         }
     }
 
-    public void displayInformationSaving(SavingAccount savingAccount) {
+    public void displayInformationSaving(SavingAccount savingAccount) {             // show interest, date, term
         UserView userView = new UserView();
         scanner = new Scanner(System.in);
         int number = 0;
@@ -78,14 +78,14 @@ public class SavingView {
                     int balance = ControllerSaving.savingProcess(savingAccount);
                     System.out.println("Bạn đã gửi tiết kiệm thành công");
                     System.out.println("Số dư của bạn là: " + balance + "VND");
-                    ControllerTransaction.addTransactionForSaving(savingAccount);
+                    ControllerTransaction.addTransactionForSaving(savingAccount);       // add to transaction
                     
                     return;
                 }
                 case 2: {
                     System.out.println("bạn đã từ chối gửi tiết kiệm");
                     System.out.println(" Thank you for your concern");
-                    ControllerUser.displayUserView();
+                    ControllerUser.displayUserView();                                   // refuse - > back to user view
                     break;
                 }
                 default:

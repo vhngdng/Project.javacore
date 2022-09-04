@@ -92,7 +92,7 @@ public class UserView {
         // check expireDate
         boolean isQuit = false;
         boolean isValid = controllerUser.checkExpireDateOfSender();
-        if (isValid == false) {
+        if (isValid == false) {                 // expired card
             System.out.println("Your card is expired\nPlease call our hotline and contact us for the details");
             ControllerUser.displayUserView();
         }
@@ -109,7 +109,7 @@ public class UserView {
         while (true) {
             number = insertNumber(number);
             switch (number) {
-                case 1: {
+                case 1: {                       // input beneficiary account by yourself
                     System.out.println("Beneficiary account: ");
                     int beneficiaryCurrentAccount = 0;
                     beneficiaryCurrentAccount = insertNumber(beneficiaryCurrentAccount);
@@ -143,13 +143,13 @@ public class UserView {
                     }
                     break;
                 }
-                case 2: {
+                case 2: {                   // show other User to select
                     Map<Integer, Integer> map = controllerUser.selectBeneficiary();
                     transferProcess(map);
                     break;
                 }
-                case 3: {
-                    display(controllerUser.getUserLoginJson());
+                case 3: {                       //back to the home menu
+                    ControllerUser.displayUserView();
                     break;
                 }
                 default:
@@ -188,7 +188,6 @@ public class UserView {
     // online borrowing
     public void onlineBorrowing(User user) {
         int number = 0;
-        // System.out.println("test");//Helen: not use this
         System.out.println("Sender information: " + user.getCardType());
         System.out.println("User balance: " + user.getBalance());
         System.out.println("User card number: " + user.getCardNumber());
@@ -199,7 +198,7 @@ public class UserView {
             number = insertNumber(number);
             switch (number) {
                 case 1: {
-                    consumerLoanProcess(user);
+                    consumerLoanProcess(user);              // show detail and get more information of user 
                     break;
                 }
                 case 2: {
@@ -218,7 +217,7 @@ public class UserView {
 
     }
 
-    
+    // get information before loan process
     private void consumerLoanProcess(User user) {
         // check amount to borrow
         int facility = (int) (0.75 * user.getBalance());
@@ -317,13 +316,13 @@ public class UserView {
         System.out.println("wrong type input");
     }
 
-    public void chooseTermOfBorrowing(int moneyToBorrow) {
+    public void chooseTermOfBorrowing(int moneyToBorrow) {          
         boolean isQuit = false;
         int termOfBorrowing = 0;
         while (true) {
             termOfBorrowing = insertNumber(termOfBorrowing);
             switch (termOfBorrowing) {
-                case 1, 2, 3, 6, 9, 12: {
+                case 1, 2, 3, 6, 9, 12: {                   // available terms are 1-2-3-6-9-12
                     ControllerSchedule.continueAcceptingInterest(termOfBorrowing, moneyToBorrow);
                     break;
                 }

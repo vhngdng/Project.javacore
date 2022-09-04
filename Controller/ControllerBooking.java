@@ -148,7 +148,7 @@ public class ControllerBooking {
     }
 
     public static void registerBooking(Booking booking) {
-        Booking.addBooking(booking);
+        
         System.out.println("thông tin cuộc hẹn: " + booking.toString());
     }
 

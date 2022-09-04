@@ -25,7 +25,7 @@ public class LoginView {
         UserInfo.put("password", password);
         UserInfo.put("currentAccount", currentAccount);
     //chuyển param là file JSON sang controller
-        controllerLogin.loginUser(UserInfo);
+        controllerLogin.loginUser(UserInfo);                    // log in dung json
 
     }
 

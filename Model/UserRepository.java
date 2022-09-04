@@ -231,9 +231,9 @@ public class UserRepository {
     // online borrowing
     public static int onlineBorrowing(BorrowingTransaction borrowingTransaction, User borrowingUser) {
         int money = borrowingTransaction.getMoney();
-        borrowingUser.setBalance(borrowingUser.getBalance() + money);
+        borrowingUser.setBalance(borrowingUser.getBalance() + money);               // balance after loan
         // add transaction in user
-        TransactionRepository.addBorrowingTransaction(borrowingTransaction);
+        TransactionRepository.addBorrowingTransaction(borrowingTransaction);        // add borrowing transaction
         int id = borrowingTransaction.getId();
 
         // print Borrowing Transaction
@@ -242,12 +242,22 @@ public class UserRepository {
         return borrowingUser.getBalance();
     }
 
+    // Saving function
     public static int minusTheSavingAmount(SavingAccount savingAccount) {
         User user = User.getUser();
         int amount = user.getBalance() - (int)savingAccount.getSavingBalence();
-        User.getUser().setBalance(amount);
-        
+        User.getUser().setBalance(amount);  
+        // balance after send money for saving
         return User.getUser().getBalance();
     }
 
+
+    public static boolean checkSavingBalance(double savingBalance) {        // check condition, money for saving is valid or not
+        if (User.getUser().getBalance() >= savingBalance) {
+            return true;
+        }else{
+            return false;
+        }
+       
+    }
 }

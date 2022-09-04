@@ -54,20 +54,20 @@ public class AdminAccessView {
                     ControllerAdmin controllerAdmin = new ControllerAdmin();
                     System.out.println("Hãy nhập current account/id của user");
                     int numToLock = 0;
-                    numToLock = userView.insertNumber(numToLock);
-                    controllerAdmin.lockOrUnlockUser(numToLock);
+                    numToLock = userView.insertNumber(numToLock);       // check number là dạng số
+                    controllerAdmin.lockOrUnlockUser(numToLock);        // unlock / lock user
                     break;
                 }
                 case 2: {
-                    ControllerAdmin.ListOfUser();
+                    ControllerAdmin.ListOfUser();           // show list
                     break;
                 }
                 case 3: {
-                    displayTransactionSelection();
+                    displayTransactionSelection();                      // show transaction
                     int numTrans = 0;
                     numTrans = userView.insertNumber(numTrans);
                     switch (numTrans) {
-                        case 1: {
+                        case 1: {                                       
                             System.out.println("hay nhap ngay");
                             int date = 0;
                             date = userView.insertNumber(date);

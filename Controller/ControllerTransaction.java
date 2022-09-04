@@ -79,8 +79,7 @@ public class ControllerTransaction {
 
 
     public static int moneyDisbursement(BorrowingTransaction borrowingTransaction, User borrowingUser) {
-        // online borrowing
-        return UserRepository.onlineBorrowing(borrowingTransaction, borrowingUser);
+        return UserRepository.onlineBorrowing(borrowingTransaction, borrowingUser);             // get balance of user after loan
     }
 
     public static void addTransactionForSaving(SavingAccount savingAccount) {
