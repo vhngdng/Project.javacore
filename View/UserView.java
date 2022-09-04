@@ -217,6 +217,7 @@ public class UserView {
 
     }
 
+    
     private void consumerLoanProcess(User user) {
         // check amount to borrow
         int facility = (int) (0.75 * user.getBalance());
