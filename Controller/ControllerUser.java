@@ -72,8 +72,7 @@ public class ControllerUser {
         User userBeneficiary = new User();
         userBeneficiary.setCurrentAccount(currentAccount);
         //UserRepository check
-        userBeneficiary = UserRepository.checkCurrentAccount(userBeneficiary);
-        UserRepository.checkCurrentAccount(userBeneficiary);
+        userBeneficiary = UserRepository.checkCurrentAccountSelect1(userBeneficiary);
 
         if (userBeneficiary == null) {
             // is not valid ---> direct to User log-in menu

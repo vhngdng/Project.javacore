@@ -99,8 +99,24 @@ public class UserRepository {
 
     public static User checkCurrentAccount(User user) {
         for (Person listPerson : personList) {
-            if (listPerson != null && listPerson.getRole() != -1
+            if (listPerson.getRole() != -1
                     && ((User) listPerson).getCurrentAccount() == (User.getUser().getCurrentAccount())) {
+                user = (User) listPerson;
+                break;
+            }
+        }
+
+        if (user.getId() == 0) {
+            System.out.println("sai thông tin");
+            user = null;
+        }
+        return user;
+    }
+
+    public static User checkCurrentAccountSelect1(User user) {
+        for (Person listPerson : personList) {
+            if (listPerson.getRole() != -1
+                    && ((User) listPerson).getCurrentAccount() != (User.getUser().getCurrentAccount())) {
                 user = (User) listPerson;
                 break;
             }
@@ -142,6 +158,7 @@ public class UserRepository {
         }
         return user;
     }
+
 
 
     // chuyen tien

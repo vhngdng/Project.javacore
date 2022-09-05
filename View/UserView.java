@@ -136,7 +136,7 @@ public class UserView {
                         // Date Time Transaction
                         String dateTimeSendingTransaction = DateTimeUtil.convertLocalDateToString(LocalDateTime.now());
                         moneyTransactionJson.put("dateTimeSendingTransaction", dateTimeSendingTransaction);
-                        moneyTransactionJson.put("senderCurrentAccount", String.valueOf(user.getCurrentAccount()));
+                        moneyTransactionJson.put("senderCurrentAccount", String.valueOf(User.getUser().getCurrentAccount()));
                         ControllerTransaction.transferMoney(moneyTransactionJson);
                     } else {
                         ControllerUser.displayUserView();
@@ -183,6 +183,7 @@ public class UserView {
                         + transaction.getSenderCurrentAccount() + " toi " + transaction.getBeneficiaryCurrentAccount());
         System.out.println("Số tiền còn dư của bạn :"
                 + UserRepository.getUserWithCurrentAccount(transaction.getSenderCurrentAccount()).getBalance());
+                ControllerUser.displayUserView();
     }
 
     // online borrowing
