@@ -1,6 +1,8 @@
 # Project.javacore
 This Project create a Java console program to illustrate the process of logging in and booking via online banking system.
+
 1. Main Screen as below:
+
 When running file Main, the Home menu is displayed with 3 options offered to users:
 
 (Please choose 1 to sign in, 2 to book, and 3 to quit from the program).
