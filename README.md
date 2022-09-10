@@ -6,7 +6,8 @@ When running file Main, the Home menu is displayed with 3 options offered to use
 (Please choose 1 to sign in, 2 to book, and 3 to quit from the program).
 
 2. Function details:
-   2.1. Option 1: sign-in 
+
+2.1. Option 1: sign-in 
 This main function enables users to choose the following sub-functions:
 + Balance Display
 + Money Transfer
