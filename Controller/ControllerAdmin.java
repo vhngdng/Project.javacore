@@ -9,6 +9,7 @@ import View.AdminAccessView;
 public class ControllerAdmin {
     public Admin admin;
     private AdminAccessView adminAccessView;
+
     public void lockOrUnlockUser(int num){
         adminAccessView = new AdminAccessView();
         if (num == 0) {
@@ -27,7 +28,10 @@ public class ControllerAdmin {
     }
 
 
-    
+    public static void displayAdminAccessView() {
+        AdminAccessView adminAccessView = new AdminAccessView();
+        adminAccessView.display();
+    }
 
     
 }

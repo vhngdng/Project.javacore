@@ -36,23 +36,15 @@ public class ControllerLogin {
         person.setCurrentAccount(currentAccount);
 
         Person checkedPerson = UserRepository.checkLoginUser(person);
-        
-        if (checkedPerson == null) {    // login access is denied -> back to menu view
-            MenuView menuView = new MenuView();
-            menuView.display();
-        }else{
-            if (checkedPerson.getRole() == -1) {    // role = -1 -> admin
-                adminAccessView.display();
-            }else{
-                User user = (User) checkedPerson;
-                User.setUser(user);
-                JSONObject userJson = new JSONObject();
-                ControllerUser controllerUser = new ControllerUser();
-                userJson = controllerUser.convertObjectToJson(user);
-                userView.display(userJson);
-            }
+            User user = (User) checkedPerson;
+            User.setUser(user);
+            JSONObject userJson = new JSONObject();
+            ControllerUser controllerUser = new ControllerUser();
+            userJson = controllerUser.convertObjectToJson(user);
+            userView.display(userJson);
+            
         }
-    }
+    
     
     public JSONObject getUserJson() {
         return this.getUserJson();

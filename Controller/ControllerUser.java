@@ -8,6 +8,7 @@ import Model.Transaction;
 import Model.TransactionRepository;
 import Model.User;
 import Model.UserRepository;
+import View.LoginView;
 import View.MenuView;
 import View.SavingView;
 import View.UserView;
@@ -189,5 +190,10 @@ public class ControllerUser {
     public void displayMenuView() {
         MenuView menuView = new MenuView();
         menuView.display();
+    }
+
+    public void displayLoginView() {
+        LoginView loginView = new LoginView();
+        loginView.display();
     }
 }

@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import Controller.ControllerAdmin;
 import Controller.ControllerSchedule;
 import Controller.ControllerUser;
 
@@ -74,6 +75,7 @@ public class UserRepository {
     }
 
     public static Person checkLoginUser(Person person){
+        ControllerUser controllerUser = new ControllerUser();
         for (Person listPerson : personList) {
             if (listPerson.getName().equals(person.getName())
                     && listPerson.getPassword().equals(person.getPassword())
@@ -82,17 +84,24 @@ public class UserRepository {
                 break;
             }
         }
-        if (i == 3) {
-            ControllerUser controllerUser = new ControllerUser();
-            controllerUser.displayMenuView();
-        }
+        
         if (person.isLocked() == true) {
             person = null;
             System.out.println("Tài khoản đã bị khóa, không thể đăng nhập");
-            
-        } else if (person.getRole() != -1 && person.getRole() != 1) {
+            controllerUser.displayMenuView();                       // back to Menu
+        } else if (person.getRole() != -1 && person.getRole() != 1 && person.isLocked() == false) {
             person = null;
             System.out.println("sai thông tin đăng nhập");
+            i++;
+            if (i == 3) {
+            controllerUser.displayMenuView();
+            }
+            controllerUser.displayLoginView();                      // back to login menu
+        } else if (person.isLocked() == false && person.getRole() == -1) {
+            
+            ControllerAdmin.displayAdminAccessView();
+        } else if (person.isLocked() == false && person.getRole() == 1) {
+            return person;
         }
         return person;
     }
